@@ -546,6 +546,7 @@
 </head>
 <body>
 
+    <!-- 1. نافذة إهداء أمي العزيزة (تختفي بعد 5 ثواني) -->
     <div class="gift-overlay-mom" id="momOverlay">
         <div class="gift-card-mom">
             <h1>أمي العزيزة 🤍🌿</h1>
@@ -553,6 +554,7 @@
         </div>
     </div>
 
+    <!-- 2. نافذة إهداء أبي الغالي (تظهر من الثانية 5 وتختفي بالثانية 10) -->
     <div class="gift-overlay-dad" id="dadOverlay">
         <div class="gift-card-dad">
             <h1>أبي الغالي 🖤✨</h1>
@@ -560,6 +562,7 @@
         </div>
     </div>
 
+    <!-- 3. نافذة الاستبيان الجديد للذكاء الفني (تظهر في الثانية 10 حتى يتم الضغط) -->
     <div class="survey-overlay" id="surveyOverlay">
         <div class="survey-card">
             <h2>الاستبيان الفني والتنظيمي 📋✍️</h2>
@@ -574,18 +577,21 @@
         </div>
     </div>
 
+    <!-- 4. واجهة التطبيق الفنية الرئيسية -->
     <div class="app-container" id="appMain">
         <div class="app-header">
             <h1>مـعـرض لـوحـتـي الـفـنـي الـمـتـكـامـل</h1>
             <p>مساحتك الإبداعية والتعليمية الآمنة والمضمونة</p>
         </div>
 
+        <!-- أزرار التنقل بين الأقسام -->
         <div class="tabs-nav">
             <button class="tab-link active" onclick="switchTab(event, 'chatTab')">💬 الدردشة الفنية</button>
             <button class="tab-link" onclick="switchTab(event, 'friendTab')">🌸 صديقة المواساة</button>
             <button class="tab-link" onclick="switchTab(event, 'studioTab')">🎨 استوديو التخيل</button>
         </div>
 
+        <!-- تبويب 1: الدردشة المتكاملة والمحاكاة التعليمية -->
         <div id="chatTab" class="tab-content active">
             <div class="chat-wrapper">
                 <div class="chat-header">
@@ -606,6 +612,7 @@
             </div>
         </div>
 
+        <!-- تبويب 2: صديقة المواساة والتشجيع عند التعب -->
         <div id="friendTab" class="tab-content">
             <div class="friend-card">
                 <div class="friend-avatar">🌸</div>
@@ -615,8 +622,10 @@
             </div>
         </div>
 
+        <!-- تبويب 3: استوديو اللوحات وتغيير المظهر الفخم -->
         <div id="studioTab" class="tab-content">
             <div class="studio-grid">
+                <!-- لوحة التحكم بالمظهر والستايل الفاخر -->
                 <div class="studio-panel">
                     <h3>تغيير مظهر وتخصيص ألوان التطبيق</h3>
                     <div class="theme-selector">
@@ -627,146 +636,11 @@
                     </div>
                 </div>
 
+                <!-- لوحة تخيل وتوليد اللوحات الإبداعية العشوائية -->
                 <div class="studio-panel">
                     <h3>استوديو تخيل وتوليد اللوحات الفنية</h3>
                     <div class="image-generator">
                         <div class="canvas-display" id="canvasDisplay">
                             <div class="placeholder-text" id="placeholderText">اضغطي على الزر بالأسفل لتخيل وتوليد لوحة فنية عشوائية فخمة وراقية تناسب ذوقكِ 🌊⛰️</div>
                         </div>
-                        <button class="generate-btn" onclick="generateArt()">✨ ابدأي بتوليد اللوحة الفنية الفاخرة</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // مصفوفة من الاقتباسات للمواساة والتشجيع
-        const quotes = [
-            "أنتِ لستِ مجرد طالبة عادية، أنتِ فنانة تجمع بين العلم والإبداع بشكل مذهل! استمري فالفخر ينتظركِ 💖",
-            "عندما تشعرين بالضغط من الكيمياء أو الفيزياء، تذكري أن ترتيب العناصر في لوحتك الفنية يشبه تماماً ترتيب الروابط الرائعة في الطبيعة! 🎨🧪",
-            "الخطوط البسيطة والورود الناعمة التي تزينين بها مكتبكِ هي انعكاس لجمال روحكِ الفنية البسيطة والراقية 🌸",
-            "النجاح في الامتحانات يحتاج صبراً تماماً كصبركِ عند دمج ألوان الأكريليك الساحرة على لوحتكِ الجميلة ✨"
-        ];
-
-        // صور اللوحات العشوائية الفخمة (بحر، جبال، طبيعة نيلية فخمة)
-        const artImages = [
-            "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=600&auto=format&fit=crop&q=60", // لوحة البحر المهيب الساحر بظلال نيلية زرقاء
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&auto=format&fit=crop&q=60", // لوحة الفن التجريدي الفاخر بالزهور البسيطة
-            "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=60", // موجة حيوية بألوان نيلية داكنة فخمة جداً
-            "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=600&auto=format&fit=crop&q=60"  // جبال مغطاة بالغيوم بستايل فني وجميل
-        ];
-
-        // تفعيل الخيارات في الاستبيان
-        function toggleOption(btn) {
-            btn.classList.toggle('selected');
-        }
-
-        // إغلاق الاستبيان وفتح الواجهة الرئيسية
-        function closeSurvey() {
-            document.getElementById('surveyOverlay').style.display = 'none';
-            const app = document.getElementById('appMain');
-            app.style.opacity = '1';
-        }
-
-        // التنقل بين التبويبات الفنية
-        function switchTab(evt, tabName) {
-            const tabcontents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabcontents.length; i++) {
-                tabcontents[i].classList.remove("active");
-            }
-            const tablinks = document.getElementsByClassName("tab-link");
-            for (let i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-
-        // إرسال الرسائل ومحاكاة الرد الفني والتعليمي الموسع
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const chatBox = document.getElementById('chatBox');
-            const text = input.value.trim();
-            
-            if (text === '') return;
-
-            // رسالة المستخدم
-            const userDiv = document.createElement('div');
-            userDiv.className = 'message user';
-            userDiv.innerText = text;
-            chatBox.appendChild(userDiv);
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // محاكاة رد ذكي وتفاعلي وممتع يناسب اهتماماتها الفنية والتعليمية
-            setTimeout(() => {
-                const botDiv = document.createElement('div');
-                botDiv.className = 'message bot';
-                
-                if(text.includes('كيمياء') || text.includes('جدول دائم') || text.includes('عدد ذري')) {
-                    botDiv.innerText = "يا دكتورة المستقبل! 🧪 لحفظ الأعداد الذرية بسهولة، تذكري دائماً الهيدروجين (1) والهيليوم (2) والليثيوم (3).. تخيليها كدرجات ألوان تبدأ خفيفة وتصبح داكنة وفخمة! سأساعدك في حل كل المسائل هنا بالفور.";
-                } else if (text.includes('since') || text.includes('انجليزي')) {
-                    botDiv.innerText = "قاعدة Since الجميلة! 🇬🇧 نستخدمها دائماً عندما نتحدث عن نقطة بداية الزمن المحددة (مثلاً: منذ عام 2026، أو منذ الساعة 4). تذكري أن نطق 14 هو (Four-teen) بمد الصوت، أما 40 فهو (Four-ty) سريعاً وفخماً! 📝";
-                } else if (text.includes('مكتب') || text.includes('رسم') || text.includes('ماركر')) {
-                    botDiv.innerText = "أفكار ديكور المكتب الفنية! 🌸 أقترح عليكِ وضع علب الأكريليك والماركرز على شكل تدرج قوسي، وتزيين حواف الأرفف بأوراق وأزهار بيضاء ووردية بسيطة جداً بدون تكلّف، لتعطيكِ هدوءاً فخماً أثناء الرسم والدراسة.";
-                } else {
-                    botDiv.innerText = "رسالة رائعة جداً من فنانة ذكية ومبدعة! ✨ كودكِ البرمي الآن نظيف ومستقر 100% ويخلو تماماً من أي حيوانات أو مشاكل سابقة، أنا هنا لمواكبة إبداعك الفني المذهل وتطويره خطوة بخطوة!";
-                }
-                
-                chatBox.appendChild(botDiv);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
-
-        // تغيير عبارات المواساة والتشجيع
-        function changeQuote() {
-            const quoteText = document.getElementById('quoteText');
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            quoteText.style.opacity = 0;
-            setTimeout(() => {
-                quoteText.innerText = quotes[randomIndex];
-                quoteText.style.opacity = 1;
-            }, 300);
-        }
-
-        // استوديو توليد لوحات عشوائية فخمة
-        function generateArt() {
-            const display = document.getElementById('canvasDisplay');
-            const randomIndex = Math.floor(Math.random() * artImages.length);
-            display.innerHTML = `<img src="${artImages[randomIndex]}" alt="لوحة فنية فاخرة تم توليدها">`;
-        }
-
-        // ميزة تغيير مظهر وألوان الخلفية الكاملة للتطبيق بكل فخامة وسهولة
-        function changeTheme(theme, btn) {
-            const themeBtns = document.getElementsByClassName("theme-btn");
-            for (let i = 0; i < themeBtns.length; i++) {
-                themeBtns[i].classList.remove("active");
-            }
-            btn.classList.add("active");
-
-            if (theme === 'dark') {
-                document.body.style.backgroundColor = '#0b0f19';
-            } else if (theme === 'green') {
-                document.body.style.backgroundColor = '#061f14';
-            } else if (theme === 'purple') {
-                document.body.style.backgroundColor = '#120b24';
-            } else if (theme === 'pink') {
-                document.body.style.backgroundColor = '#241219';
-            }
-        }
-
-        // تفعيل تشغيل ظهور النوافذ عند تحميل الصفحة بالترتيب المتقن والمحسوب تلقائياً
-        window.onload = function() {
-            // للتأكد من تفعيل الأنميشن فوراً عند فتح الرابط
-            document.getElementById('momOverlay').style.display = 'flex';
-        };
-    </script>
-</body>
-</html>
+ 
