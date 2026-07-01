@@ -197,28 +197,34 @@
 <body>
 
     <div class="container">
+        <!-- كارد الواجهة الأنيق والمظلم -->
         <div class="header-card">
             <div class="emoji">✨🎨</div>
             <h1>تطبيق لوحتي</h1>
             <p>مساحتكِ الخاصة ومرسمكِ مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
             <p style="font-weight: bold; color: #00d2ff;">جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
 
+            <!-- معرض الصور الفخمة المضمونة والثابتة -->
             <div class="luxury-gallery">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=400&q=80" alt="فهد أسود ملكي">
+                    <!-- فهد أسود ملكي حقيقي بعيون متوهجة -->
+                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80" alt="الفهد الأسود الملكي">
                     <span>الفهد الأسود 🐆</span>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa52?auto=format&fit=crop&w=400&q=80" alt="حصان أسود فخم">
+                    <!-- حصان فخم غامض -->
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80" alt="حصان فخم">
                     <span>الكبرياء الملكي 🐎</span>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=400&q=80" alt="الحوت النجمي">
+                    <!-- حوت ساحر في أعماق مظلمة مضيئة بالنجوم -->
+                    <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=400&q=80" alt="الحوت النجمي">
                     <span>الحوت الساحر 🐋</span>
                 </div>
             </div>
         </div>
 
+        <!-- أداة توليد الصور بالذكاء الاصطناعي -->
         <div class="luxury-card">
             <h2>🌌 تخيل وتوليد اللوحات الفخمة فوراً</h2>
             <div class="ai-input-group">
@@ -230,6 +236,7 @@
             </div>
         </div>
 
+        <!-- لوحة الرسم التخطيطي السريع -->
         <div class="luxury-card">
             <h2>🖌️ لوحة التخطيط والتنسيق السريع (ثانوي)</h2>
             <button class="luxury-btn" style="background: #1e293b; margin: 0; box-shadow: none;" onclick="toggleCanvasPanel()">فتح / إغلاق لوحة الرسم 🛠️</button>
@@ -244,6 +251,7 @@
             </div>
         </div>
 
+        <!-- المستشار الفني والمحادثة الرقمية -->
         <div class="luxury-card">
             <h2>💬 المستشار الفني والمساعد الخاص بكِ</h2>
             <div class="chat-display" id="chatDisplay">
@@ -278,11 +286,11 @@
                 const img = document.createElement('img');
                 
                 if(prompt.includes("حوت") || prompt.includes("بحر") || prompt.includes("محيط")) {
-                    img.src = "https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=600&q=80";
+                    img.src = "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=600&q=80";
                 } else if(prompt.includes("فهد") || prompt.includes("نمر") || prompt.includes("اسود") || prompt.includes("عيون")) {
-                    img.src = "https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=600&q=80";
+                    img.src = "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=600&q=80";
                 } else {
-                    img.src = "https://images.unsplash.com/photo-1553284965-83fd3e82fa52?auto=format&fit=crop&w=600&q=80";
+                    img.src = "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80";
                 }
                 
                 container.innerHTML = "";
@@ -343,5 +351,4 @@
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
     </script>
 </body>
-                                                                                                                                                                              </html>
-                                                                                                                                                                              
+</html>
