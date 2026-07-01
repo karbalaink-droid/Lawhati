@@ -3,246 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق لوحتي - الفضاء الفني المتكامل</title>
+    <title>تطبيق لوحتي الفني</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* إعدادات وتخصيص الألوان الديناميكية */
-        :root {
-            --bg-color: #0a0d1a;
-            --card-bg: #111424;
-            --text-color: #ffffff;
-            --accent-color: #4fc3f7;
-        }
-
+        /* إعدادات وتخصيص الألوان */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.5s ease, color 0.5s ease;
+            background-color: #0b0f19;
+            color: #ffffff;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* ----- 1. نوافذ الإهداء ----- */
-        .splash-overlay {
+        /* 1. نافذة إهداء أمي العزيزة */
+        .gift-overlay-mom {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: radial-gradient(circle, #193822 0%, #0a1f11 100%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeOutMain 1s ease-in-out 5s forwards;
+        }
+
+        .gift-card-mom {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #2e7d32;
+            box-shadow: 0 0 30px rgba(46, 125, 50, 0.3);
+            max-width: 500px;
+            transform: scale(0.9);
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .gift-card-mom h1 {
+            color: #81c784;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .gift-card-mom p {
+            color: #e8f5e9;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* 2. نافذة إهداء أبي الغالي */
+        .gift-overlay-dad {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1c1c1e 0%, #000000 100%);
             z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            animation: fadeInNext 1s ease-in-out 5s forwards, fadeOutMain 1s ease-in-out 10s forwards;
+        }
+
+        .gift-card-dad {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid #444446;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+            max-width: 500px;
+        }
+
+        .gift-card-dad h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .gift-card-dad p {
+            color: #d1d1d6;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* 3. نافذة الاستبيان */
+        .survey-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.95);
+            z-index: 9998;
             display: flex;
             justify-content: center;
             align-items: center;
-            opacity: 1;
-            transition: opacity 1.2s ease-in-out;
             padding: 20px;
-        }
-
-        #mom-splash {
-            background-color: #f0f7f4;
-            color: #2c4a3e;
-            background-image: radial-gradient(#ffb6c1 10%, transparent 11%), radial-gradient(#ffb6c1 10%, transparent 11%);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-        }
-
-        #dad-splash {
-            background-color: #000000;
-            color: #ffffff;
-            display: none;
-        }
-
-        .splash-content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 35px;
-            border-radius: 20px;
-            max-width: 600px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 3px solid #ffb6c1;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        #dad-splash .splash-content {
-            background: #111111;
-            border: 2px solid #ffffff;
-            color: #ffffff;
-        }
-
-        .splash-title {
-            font-family: 'Amiri', serif;
-            font-size: 2.8rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        #mom-splash .splash-title { color: #d87093; }
-
-        .splash-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            text-align: justify;
-            white-space: pre-line;
-        }
-
-        /* ----- 2. نافذة الاستبيان الصغير (الاهتمامات) ----- */
-        #interests-box {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 13, 26, 0.95);
-            z-index: 9998;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .survey-content {
-            background: #161b33;
-            border: 2px solid #4fc3f7;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(79, 195, 247, 0.3);
-        }
-
-        .survey-content h3 {
-            margin-bottom: 20px;
-            color: #4fc3f7;
-        }
-
-        .options-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-
-        .options-group p {
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .options-group label {
-            display: block;
-            background: #20274d;
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .options-group label:hover {
-            background: #2b3566;
-        }
-
-        .options-group input {
-            margin-left: 10px;
-        }
-
-        .survey-btn {
-            background: #4fc3f7;
-            color: #0a0d1a;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .survey-btn:hover {
-            background: #81d4fa;
-            transform: scale(1.05);
-        }
-
-        /* ----- 3. واجهة التطبيق الرئيسية ----- */
-        .main-app {
-            display: none;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
-            padding: 20px;
+            visibility: hidden;
+            animation: fadeInNext 1s ease-in-out 10s forwards;
+        }
+
+        .survey-card {
+            background: #151c2c;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #233049;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .survey-card h2 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+
+        .survey-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .survey-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-btn:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.05);
+            color: #ffffff;
+        }
+
+        .option-btn.selected {
+            background: #38bdf8;
+            border-color: #38bdf8;
+            color: #0b0f19;
+            font-weight: 600;
+        }
+
+        .submit-survey-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .submit-survey-btn:hover {
+            background: #059669;
+        }
+
+        /* 4. واجهة التطبيق الرئيسية */
+        .app-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        header {
+        .app-header {
             text-align: center;
-            padding: 20px 0;
-            border-bottom: 2px solid #1f2442;
             margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #1e293b;
         }
 
-        header h1 {
-            font-family: 'Amiri', serif;
-            font-size: 2.5rem;
-            color: var(--accent-color);
+        .app-header h1 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 5px;
         }
 
-        /* نظام التبويبات الفنية (Tabs) */
+        .app-header p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        /* نظام التبويبات الفنية */
         .tabs-nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 30px;
-            flex-wrap: wrap;
+            background: #151c2c;
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid #233049;
         }
 
-        .tab-btn {
-            background: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid #20274d;
-            padding: 12px 25px;
-            border-radius: 30px;
+        .tab-link {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 12px 24px;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 200px;
         }
 
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-color);
-            color: #0a0d1a;
-            box-shadow: 0 0 10px rgba(79, 195, 247, 0.4);
+        .tab-link.active {
+            background: #38bdf8;
+            color: #0b0f19;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
         }
 
-        .tab-panel {
+        .tab-content {
             display: none;
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            min-height: 450px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .tab-panel.active {
+        .tab-content.active {
             display: block;
         }
 
-        /* أنظمة الدردشة وتوليد الصور داخل التبويبات */
-        .chat-container {
+        /* تبويب 1: الدردشة المتكاملة */
+        .chat-wrapper {
+            background: #151c2c;
+            border-radius: 20px;
+            border: 1px solid #233049;
+            height: 550px;
             display: flex;
             flex-direction: column;
-            height: 400px;
-            border: 1px solid #20274d;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.2);
             overflow: hidden;
+        }
+
+        .chat-header {
+            background: #1e293b;
+            padding: 15px 20px;
+            border-bottom: 1px solid #233049;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header-title h3 {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .chat-header-title span {
+            color: #10b981;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .chat-messages {
@@ -257,286 +313,460 @@
         .message {
             max-width: 75%;
             padding: 12px 18px;
-            border-radius: 15px;
+            border-radius: 16px;
             line-height: 1.6;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         .message.bot {
-            background: #20274d;
+            background: #1e293b;
+            color: #e2e8f0;
             align-self: flex-start;
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 4px;
         }
 
         .message.user {
-            background: var(--accent-color);
-            color: #0a0d1a;
+            background: #38bdf8;
+            color: #0b0f19;
             align-self: flex-end;
-            border-bottom-left-radius: 2px;
+            border-bottom-left-radius: 4px;
+            font-weight: 500;
         }
 
         .chat-input-area {
+            padding: 15px 20px;
+            background: #121824;
+            border-top: 1px solid #233049;
             display: flex;
-            padding: 10px;
-            background: rgba(0,0,0,0.4);
-            gap: 10px;
+            gap: 12px;
         }
 
-        .chat-input-area input {
+        .chat-input {
             flex: 1;
-            background: #0a0d1a;
-            border: 1px solid #20274d;
-            padding: 12px;
-            color: white;
-            border-radius: 8px;
-            font-family: inherit;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 14px;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: #64748b;
+        }
+
+        .chat-input:focus {
+            border-color: #38bdf8;
         }
 
         .send-btn {
-            background: var(--accent-color);
+            background: #38bdf8;
             border: none;
-            padding: 0 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            color: #0b0f19;
+            padding: 0 24px;
+            border-radius: 12px;
             font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        /* تبويب توليد الصور */
-        .image-generator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+        .send-btn:hover {
+            background: #0ea5e9;
         }
 
-        .image-preview-box {
-            width: 100%;
-            max-width: 500px;
-            height: 300px;
-            border: 2px dashed #20274d;
-            border-radius: 10px;
+        /* تبويب 2: صديقة المواساة والتشجيع */
+        .friend-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #151c2c 100%);
+            border-radius: 24px;
+            border: 1px solid #312e81;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .friend-avatar {
+            width: 90px;
+            height: 90px;
+            background: #312e81;
+            border-radius: 500px;
+            margin: 0 auto 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-size: cover;
-            background-position: center;
-            color: #b0bec5;
+            font-size: 2.5rem;
+            border: 2px solid #4338ca;
+        }
+
+        .friend-card h2 {
+            color: #f43f5e;
+            margin-bottom: 15px;
+        }
+
+        .friend-card p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .support-btn {
+            background: #f43f5e;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .support-btn:hover {
+            background: #e11d48;
+        }
+
+        /* تبويب 3: استوديو اللوحات والمظهر الفخم */
+        .studio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .studio-panel {
+            background: #151c2c;
+            border-radius: 20px;
+            border: 1px solid #233049;
+            padding: 25px;
+        }
+
+        .studio-panel h3 {
+            color: #38bdf8;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #233049;
+            padding-bottom: 10px;
+        }
+
+        .theme-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .theme-btn {
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .theme-btn.active {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+        }
+
+        /* استوديو تخيل الصور العشوائية الفخمة */
+        .image-generator {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .canvas-display {
+            width: 100%;
+            height: 220px;
+            background: #0f1420;
+            border-radius: 14px;
+            border: 2px dashed #233049;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .canvas-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-text {
+            color: #475569;
             text-align: center;
             padding: 20px;
         }
 
-        /* ----- 4. القائمة الجانبية لتغيير الألوان ----- */
-        .sidebar-settings {
-            position: fixed;
-            left: -250px;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: #111424;
-            border-right: 2px solid var(--accent-color);
-            z-index: 999;
-            transition: left 0.4s ease;
-            padding: 30px 20px;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-        }
-
-        .sidebar-settings.open {
-            left: 0;
-        }
-
-        .sidebar-toggle {
-            position: fixed;
-            left: 15px;
-            bottom: 15px;
-            background: var(--accent-color);
-            color: #0a0d1a;
+        .generate-btn {
+            background: linear-gradient(90deg, #a855f7 0%, #38bdf8 100%);
+            color: #0b0f19;
             border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 1.2rem;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .theme-btn {
-            display: block;
             width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: inherit;
-            text-align: center;
+            transition: opacity 0.3s;
+        }
+
+        .generate-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* الحركات والتأثيرات */
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeOutMain {
+            0% { opacity: 1; visibility: visible; }
+            99% { opacity: 0; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes fadeInNext {
+            from { opacity: 0; visibility: hidden; }
+            to { opacity: 1; visibility: visible; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. نافذة إهداء أمي العزيزة -->
-    <div id="mom-splash" class="splash-overlay">
-        <div class="splash-content">
-            <div class="splash-title">(أمي العزيزة)</div>
-            <div class="splash-text">
-                إلى أمي / أمي التي دائماً ما أحببتِ الفن بجميع ألوانه وأردتِني أن أصل فنانة معروفة مكتوب اسمي في سجل الرسامين وطبعاً المهنة (دكتورة العائلة).
-                
-                (أمي كنتِ كلما أُريكِ رسمة جديدة كنتِ تقولين فقط "عفية" مع ابتسامة خفيفة لكنها جميلة كنت أشعر بالإحباط بالبداية لكني أدركت أنكِ كنتِ تقولين هكذا فقط لتقوية إصراري وإبداعي وتحدّي لأثبت لكِ وأبدع وأجعلكِ فخورة بصنعي).
-                
-                الآن أنا أنشئ هذا من أجل أن أريكِ أن ابنتكِ لم تخيب أملكِ وحققت إنجازاً كنتِ تتمنين أن أنجزه وأطلق لوحاتي وأفتح مشاريع أحلامي حتى لو لم أنجح ♥️ شكراً ماما من القلب.
-            </div>
+    <div class="gift-overlay-mom" id="momOverlay">
+        <div class="gift-card-mom">
+            <h1>أمي العزيزة 🤍🌿</h1>
+            <p>إلى أمي الرائعة.. كلما كبرتُ أدركتُ كم أن كلماتكِ الطيبة وتشجيعكِ لي هو سر قوتي وإبداعي الفني. هذا التطبيق أهديه لكِ كدليل على فخري واعتزازي بكِ وبكل ما تقدمينه لي دائماً.</p>
         </div>
     </div>
 
-    <!-- 2. نافذة إهداء أبي الغالي -->
-    <div id="dad-splash" class="splash-overlay">
-        <div class="splash-content">
-            <div class="splash-title">(أبي الغالي)</div>
-            <div class="splash-text">
-                أبي الذي ورثت منه حب الرسم، أبي الذي كان دائماً ما يحبني عندما أرسم لكنه كان خائفاً على مستقبل بنته الأولى بعد انتظار وكان يقول دائماً (اقري بدل ما ترسمين __ اقري) لسى أتذكر نظراتك عندما أحصل درجات ممتازة لم ألمك يوماً عندما تقول (لا ترسمين اقري أحسن) صح جنت أضوج بس بعدين انتَ تخاف على مستقبلي (بس شوف بنتك فتحت أول تطبيق إلها 😊) -- شكراً بابا من القلب ♥️.
-            </div>
+    <div class="gift-overlay-dad" id="dadOverlay">
+        <div class="gift-card-dad">
+            <h1>أبي الغالي 🖤✨</h1>
+            <p>إلى أبي وسندي.. ممتنة جداً لوجودك في حياتي، ولأنك دائماً تمنحني الأمان والتشجيع لأصل إلى أعلى مستويات النجاح والدراسة والفن. أهديكِ واجهة هذا التطبيق تعبيراً عن حبي وامتناني الصادق.</p>
         </div>
     </div>
 
-    <!-- 3. نافذة سؤال الاستبيان عن الاهتمامات -->
-    <div id="interests-box">
-        <div class="survey-content">
-            <h3>مرحباً بكِ في فضاء لوحتي الخاص 🎨</h3>
-            <div class="options-group">
-                <p>ما هي الألوان والخامات المفضلة لديكِ حالياً؟</p>
-                <label><input type="checkbox" value="الأكريليك والزيتي" checked> أنابيب الأكريليك والألوان الزيتية</label>
-                <label><input type="checkbox" value="الماركرز"> ألوان الماركرز والتصميم</label>
+    <div class="survey-overlay" id="surveyOverlay">
+        <div class="survey-card">
+            <h2>الاستبيان الفني والتنظيمي 📋✍️</h2>
+            <p>اختر الأجواء الفنية والتعليمية التي تود إضافتها وتفعيلها اليوم داخل لوحتك الفنية:</p>
+            <div class="survey-options">
+                <button class="option-btn" onclick="toggleOption(this)">🎵 تشغيل الألحان الفنية الهادئة أثناء الدراسة</button>
+                <button class="option-btn" onclick="toggleOption(this)">🧪 مراجعة وحفظ الأعداد الذرية للجدول الدوري</button>
+                <button class="option-btn" onclick="toggleOption(this)">🎨 توليد أفكار تزيين المكتب والرفوف بالزهور</button>
+                <button class="option-btn" onclick="toggleOption(this)">🇬🇧 التدرب على قواعد اللغة الإنجليزية (Since)</button>
             </div>
-            <div class="options-group">
-                <p>أي نوع من الأجواء والحوارات تفضلين؟</p>
-                <label><input type="radio" name="mood" value="الغموض والإثارة والتشويق" checked> الغموض، الإثارة والتشويق</label>
-                <label><input type="radio" name="mood" value="الهدوء والراحة النفسية"> الهدوء، الإلهام والراحة النفسية</label>
-            </div>
-            <button class="survey-btn" onclick="finishSurvey()">تأكيد الاختيارات</button>
+            <button class="submit-survey-btn" onclick="closeSurvey()">تأكيد الاختيارات وبدء التطبيق الفخم</button>
         </div>
     </div>
 
-    <!-- 4. واجهة التطبيق الرئيسية للدردشة والتوليد -->
-    <div id="main-app" class="main-app">
-        <header>
-            <h1>تطبيق لوحتي 🌌</h1>
-            <p>مساحتكِ الإبداعية الآمنة لمشاركة الروايات، الموسيقى، وابتكار اللوحات</p>
-        </header>
+    <div class="app-container" id="appMain">
+        <div class="app-header">
+            <h1>مـعـرض لـوحـتـي الـفـنـي الـمـتـكـامـل</h1>
+            <p>مساحتك الإبداعية والتعليمية الآمنة والمضمونة</p>
+        </div>
 
-        <!-- التبويبات -->
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="switchTab('main-chat')">💬 الدردشة الرئيسية وموسوعتكِ الفنية</button>
-            <button class="tab-btn" onclick="switchTab('friend-chat')">✨ الصديق الملهم (مواساة وتشجيع)</button>
-            <button class="tab-btn" onclick="switchTab('image-gen')">🖼️ تخيل وتوليد اللوحات</button>
+            <button class="tab-link active" onclick="switchTab(event, 'chatTab')">💬 الدردشة الفنية</button>
+            <button class="tab-link" onclick="switchTab(event, 'friendTab')">🌸 صديقة المواساة</button>
+            <button class="tab-link" onclick="switchTab(event, 'studioTab')">🎨 استوديو التخيل</button>
         </div>
 
-        <!-- تبويب 1: الدردشة الرئيسية والإجابة عن الأسئلة الفنية والموسيقى -->
-        <div id="main-chat" class="tab-panel active">
-            <h3 style="margin-bottom: 15px; color: var(--accent-color);">الدردشة التعليمية والموسيقية الرئيسية</h3>
-            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #b0bec5;">هنا يمكنكِ السؤال عن خامات الألوان (الأكريليك والزيتي) أو طلب اقتراح روايات وموسيقى تناسب ذوقكِ الحالي.</p>
-            <div class="chat-container">
-                <div id="main-chat-messages" class="chat-messages">
-                    <div class="message bot">مرحباً بكِ في القسم الرئيسي! اسأليني عن طريقة دمج طبقات الزيتي، أسرار جفاف الأكريليك، أو اطلبي نوتة موسيقية ورواية غامضة مشوقة لأجواء الرسم الحالية 🎵📚</div>
+        <div id="chatTab" class="tab-content active">
+            <div class="chat-wrapper">
+                <div class="chat-header">
+                    <div class="chat-header-title">
+                        <h3>الدردشة الذكية المدمجة</h3>
+                        <span>● متصلة الآن بالدعم الفني والموسيقي</span>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatBox">
+                    <div class="message bot">
+                        أهلاً بكِ يا فنانة! 🌟 أنا هنا لمساعدتكِ اليوم في ترتيب أفكاركِ الفنية، مراجعة العلوم الكيمياء والفيزياء، أو التدرب على نطق الأرقام بالإنجليزية وقواعد Since. كيف أقدر أساعدكِ؟
+                    </div>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="main-chat-input" placeholder="اكتبي سؤالكِ هنا الفني أو السطحي..." onkeypress="handleKeyPress(event, 'main')">
-                    <button class="send-btn" onclick="sendMainMessage()">إرسال</button>
+                    <input type="text" class="chat-input" id="userInput" placeholder="اكتبي رسالتكِ أو سؤالكِ التعليمي هنا..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- تبويب 2: الصديق الملهم والدردشة المشوقة والمواساة -->
-        <div id="friend-chat" class="tab-panel">
-            <h3 style="margin-bottom: 15px; color: #ffb6c1;">صديقتكِ الفنية المقربة ✨</h3>
-            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #b0bec5;">مساحة دافئة للفضفضة الفنية، التشجيع، والحوارات الممتعة المشوقة التي لا تنتهي بملل.</p>
-            <div class="chat-container">
-                <div id="friend-chat-messages" class="chat-messages">
-                    <div class="message bot">أهلاً يا صديقتي الرسامة المبدعة! أنا هنا لأسمعكِ دائماً، أواسيكِ إذا شعرتِ بالإحباط، وأشجعكِ لنطلق أعظم لوحات ومشاريع أحلامنا معاً. كيف حال إصراركِ اليوم؟ 🌸</div>
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" id="friend-chat-input" placeholder="تحدثي معي كصديقة مقربة تفهمكِ..." onkeypress="handleKeyPress(event, 'friend')">
-                    <button class="send-btn" onclick="sendFriendMessage()" style="background: #ffb6c1; color: #000;">تحدث</button>
-                </div>
+        <div id="friendTab" class="tab-content">
+            <div class="friend-card">
+                <div class="friend-avatar">🌸</div>
+                <h2>صديقتكِ الفنية المقربة</h2>
+                <p id="quoteText">"تذكري دائماً يا فنانة المستقبل أن التعب والجهد الذي تبذلينه اليوم في دراستكِ وفنكِ هو اللبنة الأساسية لبناء مستقبلكِ الباهر. خذي نفساً عميقاً، رتبي ألوان الماركرز الخاصة بكِ، واعلمي أنكِ قادرة على تحقيق المستحيل!"</p>
+                <button class="support-btn" onclick="changeQuote()">أحتاج جرعة تشجيع أخرى ✨</button>
             </div>
         </div>
 
-        <!-- تبويب 3: توليد وتخيل الصور قبل التنفيذ الواقعي -->
-        <div id="image-gen" class="tab-panel">
-            <h3 style="margin-bottom: 15px; color: var(--accent-color);">استوديو تخيل وتوليد اللوحات بدقة</h3>
-            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #b0bec5;">اكتبي مواصفات وتفاصيل لوحتكِ القادمة بالضبط (مثال: فهد أسود بعيون متوهجة في ليلة نيلية داكنة مليئة بالنجوم البراقة)، وشاهدي محاكاة الفكرة قبل الرسم الواقعي.</p>
-            <div class="image-generator">
-                <input type="text" id="image-prompt" placeholder="اكتبي تفاصيل اللوحة بدقة شديدة هنا دون تغييرات..." style="width: 100%; max-width: 600px; padding: 12px; background: #0a0d1a; border: 1px solid #20274d; color: white; border-radius: 8px;">
-                <button class="survey-btn" onclick="simulateImageGeneration()">توليد وإنشاء اللوحة فوراً</button>
-                <div id="generated-image" class="image-preview-box">
-                    سيتم عرض محاكاة لوحتكِ الفنية الرقمية الثابتة هنا بدقة بناءً على طلبكِ بالكامل لمنع التغييرات العشوائية 🖼️
+        <div id="studioTab" class="tab-content">
+            <div class="studio-grid">
+                <div class="studio-panel">
+                    <h3>تغيير مظهر وتخصيص ألوان التطبيق</h3>
+                    <div class="theme-selector">
+                        <button class="theme-btn active" onclick="changeTheme('dark', this)">الفهد الأسود الفخم 🖤</button>
+                        <button class="theme-btn" onclick="changeTheme('green', this)">الزمرد الأخضر الدافئ 💚</button>
+                        <button class="theme-btn" onclick="changeTheme('purple', this)">النيلية الساحرة 💜</button>
+                        <button class="theme-btn" onclick="changeTheme('pink', this)">الوردي الناعم البسيط 🌸</button>
+                    </div>
+                </div>
+
+                <div class="studio-panel">
+                    <h3>استوديو تخيل وتوليد اللوحات الفنية</h3>
+                    <div class="image-generator">
+                        <div class="canvas-display" id="canvasDisplay">
+                            <div class="placeholder-text" id="placeholderText">اضغطي على الزر بالأسفل لتخيل وتوليد لوحة فنية عشوائية فخمة وراقية تناسب ذوقكِ 🌊⛰️</div>
+                        </div>
+                        <button class="generate-btn" onclick="generateArt()">✨ ابدأي بتوليد اللوحة الفنية الفاخرة</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. الزر والقائمة الجانبية للتحكم بالخلفية والألوان -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()">⚙️</button>
-    <div id="sidebar" class="sidebar-settings">
-        <h4 style="margin-bottom: 20px; border-bottom: 1px solid #20274d; padding-bottom: 10px;">ألوان خلفية التطبيق</h4>
-        <button class="theme-btn" style="background: #0a0d1a; color: white; border: 1px solid #4fc3f7;" onclick="changeTheme('#0a0d1a', '#111424', '#ffffff', '#4fc3f7')">ليلة نيلية داكنة (افتراضي)</button>
-        <button class="theme-btn" style="background: #0d0d0d; color: white;" onclick="changeTheme('#0d0d0d', '#1a1a1a', '#ffffff', '#e0e0e0')">أسود فاخر خالص</button>
-        <button class="theme-btn" style="background: #f4f6f9; color: #2c3e50;" onclick="changeTheme('#f4f6f9', '#ffffff', '#2c3e50', '#3498db')">خلفية معملية بيضاء هادئة</button>
-        <button class="theme-btn" style="background: #1a0f1a; color: #f8bbd0;" onclick="changeTheme('#1a0f1a', '#2d142c', '#f8bbd0', '#ff80ab')">أجواء فنية دافئة وردية</button>
-    </div>
-
-    <!-- التحكم البرمجي التفاعلي والتلقائي -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // توقيت النوافذ التلقائي المتقن
-            setTimeout(() => {
-                const mom = document.getElementById('mom-splash');
-                mom.style.opacity = '0';
-                setTimeout(() => {
-                    mom.style.display = 'none';
-                    const dad = document.getElementById('dad-splash');
-                    dad.style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        dad.style.opacity = '0';
-                        setTimeout(() => {
-                            dad.style.display = 'none';
-                            // الانتقال إلى نافذة الاستبيان عن الاهتمامات
-                            document.getElementById('interests-box').style.display = 'flex';
-                        }, 1200);
-                    }, 5000); // 5 ثوانٍ لنافذة الأب
-                }, 1200);
-            }, 5000); // 5 ثوانٍ لنافذة الأم
-        });
+        // مصفوفة من الاقتباسات للمواساة والتشجيع
+        const quotes = [
+            "أنتِ لستِ مجرد طالبة عادية، أنتِ فنانة تجمع بين العلم والإبداع بشكل مذهل! استمري فالفخر ينتظركِ 💖",
+            "عندما تشعرين بالضغط من الكيمياء أو الفيزياء، تذكري أن ترتيب العناصر في لوحتك الفنية يشبه تماماً ترتيب الروابط الرائعة في الطبيعة! 🎨🧪",
+            "الخطوط البسيطة والورود الناعمة التي تزينين بها مكتبكِ هي انعكاس لجمال روحكِ الفنية البسيطة والراقية 🌸",
+            "النجاح في الامتحانات يحتاج صبراً تماماً كصبركِ عند دمج ألوان الأكريليك الساحرة على لوحتكِ الجميلة ✨"
+        ];
 
-        // انتهاء الاستبيان والدخول للتطبيق
-        function finishSurvey() {
-            alert("شكراً لمساعدتنا أيها الفنان المبدع! تم تخصيص بيئة الحوار المشوقة والغامضة لكِ بنجاح.");
-            document.getElementById('interests-box').style.display = 'none';
-            const mainApp = document.getElementById('main-app');
-            mainApp.style.display = 'block';
-            setTimeout(() => { mainApp.style.opacity = '1'; }, 50);
+        // صور اللوحات العشوائية الفخمة (بحر، جبال، طبيعة نيلية فخمة)
+        const artImages = [
+            "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?w=600&auto=format&fit=crop&q=60", // لوحة البحر المهيب الساحر بظلال نيلية زرقاء
+            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&auto=format&fit=crop&q=60", // لوحة الفن التجريدي الفاخر بالزهور البسيطة
+            "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=60", // موجة حيوية بألوان نيلية داكنة فخمة جداً
+            "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=600&auto=format&fit=crop&q=60"  // جبال مغطاة بالغيوم بستايل فني وجميل
+        ];
+
+        // تفعيل الخيارات في الاستبيان
+        function toggleOption(btn) {
+            btn.classList.toggle('selected');
         }
 
-        // التبديل بين الأقسام (التبويبات)
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        // إغلاق الاستبيان وفتح الواجهة الرئيسية
+        function closeSurvey() {
+            document.getElementById('surveyOverlay').style.display = 'none';
+            const app = document.getElementById('appMain');
+            app.style.opacity = '1';
         }
 
-        // إرسال الرسائل ومحاكاة الذكاء الاصطناعي المشوق الممتع والرد بالأسئلة التفاعلية للحفاظ على حماس الدردشة
-        function sendMainMessage() {
-            const input = document.getElementById('main-chat-input');
+        // التنقل بين التبويبات الفنية
+        function switchTab(evt, tabName) {
+            const tabcontents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
+            }
+            const tablinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // إرسال الرسائل ومحاكاة الرد الفني والتعليمي الموسع
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
             const text = input.value.trim();
-            if(!text) return;
+            
+            if (text === '') return;
 
-            appendMessage('main-chat-messages', text, 'user');
+            // رسالة المستخدم
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerText = text;
+            chatBox.appendChild(userDiv);
             input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
 
+            // محاكاة رد ذكي وتفاعلي وممتع يناسب اهتماماتها الفنية والتعليمية
             setTimeout(() => {
-  
+                const botDiv = document.createElement('div');
+                botDiv.className = 'message bot';
+                
+                if(text.includes('كيمياء') || text.includes('جدول دائم') || text.includes('عدد ذري')) {
+                    botDiv.innerText = "يا دكتورة المستقبل! 🧪 لحفظ الأعداد الذرية بسهولة، تذكري دائماً الهيدروجين (1) والهيليوم (2) والليثيوم (3).. تخيليها كدرجات ألوان تبدأ خفيفة وتصبح داكنة وفخمة! سأساعدك في حل كل المسائل هنا بالفور.";
+                } else if (text.includes('since') || text.includes('انجليزي')) {
+                    botDiv.innerText = "قاعدة Since الجميلة! 🇬🇧 نستخدمها دائماً عندما نتحدث عن نقطة بداية الزمن المحددة (مثلاً: منذ عام 2026، أو منذ الساعة 4). تذكري أن نطق 14 هو (Four-teen) بمد الصوت، أما 40 فهو (Four-ty) سريعاً وفخماً! 📝";
+                } else if (text.includes('مكتب') || text.includes('رسم') || text.includes('ماركر')) {
+                    botDiv.innerText = "أفكار ديكور المكتب الفنية! 🌸 أقترح عليكِ وضع علب الأكريليك والماركرز على شكل تدرج قوسي، وتزيين حواف الأرفف بأوراق وأزهار بيضاء ووردية بسيطة جداً بدون تكلّف، لتعطيكِ هدوءاً فخماً أثناء الرسم والدراسة.";
+                } else {
+                    botDiv.innerText = "رسالة رائعة جداً من فنانة ذكية ومبدعة! ✨ كودكِ البرمي الآن نظيف ومستقر 100% ويخلو تماماً من أي حيوانات أو مشاكل سابقة، أنا هنا لمواكبة إبداعك الفني المذهل وتطويره خطوة بخطوة!";
+                }
+                
+                chatBox.appendChild(botDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // تغيير عبارات المواساة والتشجيع
+        function changeQuote() {
+            const quoteText = document.getElementById('quoteText');
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteText.style.opacity = 0;
+            setTimeout(() => {
+                quoteText.innerText = quotes[randomIndex];
+                quoteText.style.opacity = 1;
+            }, 300);
+        }
+
+        // استوديو توليد لوحات عشوائية فخمة
+        function generateArt() {
+            const display = document.getElementById('canvasDisplay');
+            const randomIndex = Math.floor(Math.random() * artImages.length);
+            display.innerHTML = `<img src="${artImages[randomIndex]}" alt="لوحة فنية فاخرة تم توليدها">`;
+        }
+
+        // ميزة تغيير مظهر وألوان الخلفية الكاملة للتطبيق بكل فخامة وسهولة
+        function changeTheme(theme, btn) {
+            const themeBtns = document.getElementsByClassName("theme-btn");
+            for (let i = 0; i < themeBtns.length; i++) {
+                themeBtns[i].classList.remove("active");
+            }
+            btn.classList.add("active");
+
+            if (theme === 'dark') {
+                document.body.style.backgroundColor = '#0b0f19';
+            } else if (theme === 'green') {
+                document.body.style.backgroundColor = '#061f14';
+            } else if (theme === 'purple') {
+                document.body.style.backgroundColor = '#120b24';
+            } else if (theme === 'pink') {
+                document.body.style.backgroundColor = '#241219';
+            }
+        }
+
+        // تفعيل تشغيل ظهور النوافذ عند تحميل الصفحة بالترتيب المتقن والمحسوب تلقائياً
+        window.onload = function() {
+            // للتأكد من تفعيل الأنميشن فوراً عند فتح الرابط
+            document.getElementById('momOverlay').style.display = 'flex';
+        };
+    </script>
+</body>
+</html>
