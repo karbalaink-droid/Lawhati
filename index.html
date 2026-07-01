@@ -3,344 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق لوحتي 🎨</title>
+    <title>تطبيقي الفني الأول</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg-color: #030712; /* أسود ملكي عميق جداً */
-            --card-bg: rgba(11, 17, 32, 0.95); /* خلفية كارد مظلمة وساحرة */
-            --accent-color: #00d2ff; /* نيلي نيون متوهج يناسب عيون الفهد والحوت */
+        /* إعدادات عامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0a0d1a;
+            color: #ffffff;
+            overflow-x: hidden;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: #f3f4f6;
-            margin: 0;
-            padding: 15px;
+        /* ----- نوافذ الإهداء (Splash Screens) ----- */
+        .splash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 1.5s ease-in-out;
+            padding: 20px;
+        }
+
+        /* نافذة الأم */
+        #mom-splash {
+            background-color: #f0f7f4; /* أخضر فاتح دافئ */
+            color: #2c4a3e;
+            /* إضافة زهور وردية كخلفية مبسطة */
+            background-image: radial-gradient(#ffb6c1 10%, transparent 11%), radial-gradient(#ffb6c1 10%, transparent 11%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        /* نافذة الأب */
+        #dad-splash {
+            background-color: #000000; /* خلفية سوداء */
+            color: #ffffff;
+            display: none; /* تبدأ مخفية وتظهر بالـ JavaScript */
+        }
+
+        /* صندوق المحتوى داخل النوافذ */
+        .splash-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 3px solid #ffb6c1; /* إطار وردي خفيف للأم */
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        #dad-splash .splash-content {
+            background: #111111;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+        }
+
+        .splash-title {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        #mom-splash .splash-title {
+            color: #d87093; /* وردي غامق جميل للعنوان */
+        }
+
+        .splash-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            text-align: justify;
+            white-space: pre-line;
+        }
+
+        /* ----- واجهة التطبيق الرئيسية (تظهر بعد النوافذ) ----- */
+        .main-app {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            min-height: 100vh;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
-        .container {
+        /* بيئة المعرض اللوحة الفنية الثابتة */
+        .gallery-container {
             width: 100%;
-            max-width: 500px;
-        }
-
-        /* كارد الواجهة المحدث ليكون شديد الفخامة */
-        .header-card {
-            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-            padding: 30px 20px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 210, 255, 0.2);
-        }
-
-        .header-card .emoji {
-            font-size: 45px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
-        }
-
-        .header-card h1 { 
-            color: #ffffff; 
-            font-size: 28px; 
-            margin: 10px 0; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
-        }
-
-        .header-card p {
-            color: #94a3b8;
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 5px 0;
-        }
-
-        /* معرض الصور الأسطورية (الفهد الأسود، الحصان الغامض، الحوت النجمي) */
-        .luxury-gallery {
+            max-width: 1200px;
+            margin-top: 30px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
         }
 
-        .gallery-item {
-            height: 150px;
-            border-radius: 16px;
+        /* تصميم الكروت الفنية الثابتة للمتطلبات */
+        .art-card {
+            background: linear-gradient(145deg, #111424, #060814);
+            border: 1px solid #1f2442;
+            border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
         }
 
-        .gallery-item img {
+        .art-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* محاكاة اللوحات الفنية بالألوان النيلية الفخمة */
+        .art-image-placeholder {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.12);
-        }
-
-        .gallery-item span {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            color: #00d2ff;
-            text-align: center;
-            font-size: 11px;
-            padding: 6px 0;
-            font-weight: bold;
-        }
-
-        .luxury-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            padding: 25px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .luxury-card h2 { 
-            color: #00d2ff; 
-            font-size: 16px; 
-            margin-top: 0; 
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .ai-textarea {
-            width: 100%;
-            height: 85px;
-            background: #020617;
-            border: 2px solid #1e293b;
-            color: white;
-            border-radius: 14px;
-            padding: 12px;
-            box-sizing: border-box;
-            resize: none;
-            font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .ai-textarea:focus { 
-            border-color: var(--accent-color); 
-            box-shadow: 0 0 12px rgba(0, 210, 255, 0.3); 
-        }
-        
-        .luxury-btn {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(3, 105, 161, 0.3);
-            transition: 0.3s;
-        }
-
-        .luxury-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 22px rgba(3, 105, 161, 0.5); 
-        }
-
-        .generated-image-container {
-            margin-top: 15px;
-            width: 100%;
-            min-height: 280px;
-            border-radius: 16px;
-            background: #020617;
+            height: 250px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            border: 2px dashed #1e293b;
-            overflow: hidden;
+            align-items: center;
+            font-size: 4rem;
+            position: relative;
+            background-size: cover;
+            background-position: center;
         }
 
-        .generated-image-container img { width: 100%; height: 100%; object-fit: cover; }
+        /* تخصيص خلفيات ثابتة فخمة لكل عنصر لمنع التغيير */
+        #bg-sea {
+            background: linear-gradient(to bottom, #020024, #090979, #00d4ff);
+        }
+        #bg-whale {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+        #bg-horse {
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+        #bg-panther {
+            background: linear-gradient(135deg, #000000, #434343);
+        }
 
-        .secondary-panel { display: none; margin-top: 15px; }
-        #canvas {
-            border: 1px solid var(--accent-color);
-            background: #ffffff;
-            border-radius: 12px;
+        .art-info {
+            padding: 20px;
+        }
+
+        .art-info h3 {
+            font-size: 1.4rem;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+        }
+
+        .art-info p {
+            font-size: 0.95rem;
+            color: #b0bec5;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #1f2442;
+            padding-bottom: 20px;
             width: 100%;
-            height: 180px;
-            touch-action: none;
         }
 
-        .chat-display { height: 120px; overflow-y: auto; background: #020617; border-radius: 12px; padding: 12px; border: 1px solid #1e293b; margin-bottom: 10px; }
-        .msg { padding: 8px 12px; border-radius: 14px; font-size: 13px; margin-bottom: 8px; max-width: 85%; line-height: 1.4; }
-        .msg-f { background: #0f172a; color: #cbd5e1; margin-left: auto; border-bottom-right-radius: 2px; border: 1px solid #1e293b; }
-        .msg-m { background: #0369a1; color: white; margin-right: auto; border-bottom-left-radius: 2px; }
-        
-        .chat-inputs { display: flex; gap: 8px; }
-        .chat-in { flex: 1; background: #020617; border: 2px solid #1e293b; color: white; border-radius: 12px; padding: 8px 12px; outline: none; }
-        .chat-in:focus { border-color: var(--accent-color); }
+        header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header-card">
-            <div class="emoji">✨🎨</div>
-            <h1>تطبيق لوحتي</h1>
-            <p>مساحتكِ الخاصة ومرسمكِ مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
-            <p style="font-weight: bold; color: #00d2ff;">جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
+    <div id="mom-splash" class="splash-overlay">
+        <div class="splash-content">
+            <div class="splash-title">(أمي العزيزة)</div>
+            <div class="splash-text">
+                إلى أمي / أمي التي دائماً ما أحببتِ الفن بجميع ألوانه وأردتِني أن أصبح فنانة معروفة، مكتوب اسمي في سجل الرسامين وطبعاً المهنة (دكتورة العائلة).
 
-            <div class="luxury-gallery">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80" alt="الفهد الأسود الملكي">
-                    <span>الفهد الأسود 🐆</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80" alt="حصان فخم">
-                    <span>الكبرياء الملكي 🐎</span>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=400&q=80" alt="الحوت النجمي">
-                    <span>الحوت الساحر 🐋</span>
-                </div>
+                (أمي كنتِ كلما أُريكِ رسمة جديدة كنتِ تقولين فقط "عفية" مع ابتسامة خفيفة لكنها جميلة، كنت أشعر بالإحباط بالبداية لكني أدركت أنكِ كنتِ تقولين هكذا فقط لتقوية إصراري وإبداعي وتحدّي لأثبت لكِ وأبدع وأجعلكِ فخورة بصنعي).
+
+                الآن أنا أنشئ هذا من أجل أن أريكِ أن ابنتكِ لم تخيب أملكِ وحققت إنجازاً كنتِ تتمنين أن أنجزه وأطلق لوحاتي وأفتح مشاريع أحلامي حتى لو لم أنجح ♥️. شكراً ماما من القلب.
             </div>
         </div>
+    </div>
 
-        <div class="luxury-card">
-            <h2>🌌 تخيل وتوليد اللوحات الفخمة فوراً</h2>
-            <div class="ai-input-group">
-                <textarea class="ai-textarea" id="imagePrompt" placeholder="اكتبي تفاصيل لوحتكِ القادمة هنا... مثال: فهد أسود بعيون زرقاء متوهجة in ليلة نيليّة داكنة مليئة بالنجوم البراقة..."></textarea>
-                <button class="luxury-btn" onclick="generateImage()">بدء التصميم الذكي والأنيق 🔮</button>
-            </div>
-            <div class="generated-image-container" id="imageContainer">
-                <div id="placeholderText" style="color: #4b5563; font-size: 13px; text-align: center; padding: 15px;">بانتظار كتابة فكرتكِ ليرسمها التطبيق فوراً بأعلى فخامة ✨</div>
+    <div id="dad-splash" class="splash-overlay">
+        <div class="splash-content">
+            <div class="splash-title">(أبي الغالي)</div>
+            <div class="splash-text">
+                أبي الذي ورثت منه حب الرسم، أبي الذي كان دائماً ما يحبني عندما أرسم لكنه كان خائفاً على مستقبل بنته الأولى بعد انتظار، وكان يقول دائماً: "اقري بدل ما ترسمين __ اقري".
+
+                لسه أتذكر نظراتك عندما أحصل درجات ممتازة، لم ألمكِ يوماً عندما تقول "لا ترسمين اقري أحسن"، صح جنت أضوج بس بعدين انتَ تخاف على مستقبلي.. (بس شوف بنتك فتحت أول تطبيق إلها 😊) -- شكراً بابا من القلب ♥️.
             </div>
         </div>
+    </div>
 
-        <div class="luxury-card">
-            <h2>🖌️ لوحة التخطيط والتنسيق السريع (ثانوي)</h2>
-            <button class="luxury-btn" style="background: #1e293b; margin: 0; box-shadow: none;" onclick="toggleCanvasPanel()">فتح / إغلاق لوحة الرسم 🛠️</button>
-            
-            <div class="secondary-panel" id="canvasPanel">
-                <canvas id="canvas"></canvas>
-                <div style="margin-top: 10px; display: flex; gap: 12px; align-items: center; font-size: 14px;">
-                    <label>لون الفرشاة:</label>
-                    <input type="color" id="paintColor" value="#00d2ff" style="background: none; border: none; cursor: pointer;">
-                    <button onclick="clearCanvas()" style="background: #991b1b; color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; margin-right: auto;">مسح الشاشة 🧹</button>
+    <div id="main-app" class="main-app">
+        <header>
+            <h1>معرض اللوحات والأفكار الفنية الفاخرة</h1>
+            <p>مرحباً بكِ في مساحتكِ الإبداعية المضمونة والثابتة</p>
+        </header>
+
+        <div class="gallery-container">
+            <div class="art-card">
+                <div id="bg-sea" class="art-image-placeholder">🌊</div>
+                <div class="art-info">
+                    <h3>لوحة البحر المهيب</h3>
+                    <p>محيط واسع وثابت يجسد العمق والهدوء الفني بألوان نيلية ساحرة زرقاء وداكنة تليق بذوقك الفخم.</p>
                 </div>
             </div>
-        </div>
 
-        <div class="luxury-card">
-            <h2>💬 المستشار الفني والمساعد الخاص بكِ</h2>
-            <div class="chat-display" id="chatDisplay">
-                <div class="msg msg-f">مرحباً بكِ في جناحكِ الفني الداكن. ألوان الأسود والنيلي مع هيبة الخيل والفهود السوداء تعكس ذوقاً فنياً نادراً وفي غاية القوة. كيف نخطط للوحتكِ القادمة؟ 🌌👑</div>
+            <div class="art-card">
+                <div id="bg-whale" class="art-image-placeholder">🐋</div>
+                <div class="art-info">
+                    <h3>لوحة الحوت الساحر</h3>
+                    <p>الحوت في مكانه الصحيح تماماً مستقر داخل أعماق البحر الفاخر ليضفي لمسة من الغموض والجمال.</p>
+                </div>
             </div>
-            <div class="chat-inputs">
-                <input type="text" class="chat-in" id="chatInput" placeholder="ناقشي فكرتكِ الفنية هنا...">
-                <button class="luxury-btn" onclick="sendChat()" style="margin: 0; width: auto; padding: 0 20px;">إرسال</button>
+
+            <div class="art-card">
+                <div id="bg-horse" class="art-image-placeholder">🐎</div>
+                <div class="art-info">
+                    <h3>لوحة الحصان الأصيل</h3>
+                    <p>عنصر ثابت ومستقر يمثل القوة والإصرار، بألوان دافئة متناسقة مع الخلفية الليلية الفخمة.</p>
+                </div>
+            </div>
+
+            <div class="art-card">
+                <div id="bg-panther" class="art-image-placeholder">🐆</div>
+                <div class="art-info">
+                    <h3>لوحة الفهد الأسود</h3>
+                    <p>موقع ثابت ومحدد بدقة ليبرز الفخامة والأناقة الفنية الساحرة دون أي تغيير أو تبديل عشوائي.</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function toggleCanvasPanel() {
-            const panel = document.getElementById('canvasPanel');
-            if(panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'block';
-                setupCanvas();
-            }
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            const momSplash = document.getElementById('mom-splash');
+            const dadSplash = document.getElementById('dad-splash');
+            const mainApp = document.getElementById('main-app');
 
-        function generateImage() {
-            const prompt = document.getElementById('imagePrompt').value.trim();
-            const container = document.getElementById('imageContainer');
-            if(prompt === "") { alert("من فضلكِ، اكتبي الوصف الفخم للوحة أولاً!"); return; }
-
-            container.innerHTML = '<div style="color: #00d2ff; font-size: 14px; text-align: center; padding: 20px;">🌌 جاري نسج اللوحة الملكية الداكنة بناءً على طلبك الفخم...</div>';
-
+            // 1. بعد 5 ثوانٍ، تختفي نافذة أمي وتظهر نافذة بابا
             setTimeout(() => {
-                const img = document.createElement('img');
+                momSplash.style.opacity = '0';
                 
-                if(prompt.includes("حوت") || prompt.includes("بحر") || prompt.includes("محيط")) {
-                    img.src = "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=600&q=80";
-                } else if(prompt.includes("فهد") || prompt.includes("نمر") || prompt.includes("اسود") || prompt.includes("عيون")) {
-                    img.src = "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=600&q=80";
-                } else {
-                    img.src = "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80";
-                }
-                
-                container.innerHTML = "";
-                container.appendChild(img);
-            }, 2000);
-        }
-
-        function sendChat() {
-            const input = document.getElementById('chatInput');
-            const display = document.getElementById('chatDisplay');
-            if(input.value.trim() !== "") {
-                const myMsg = document.createElement('div');
-                myMsg.className = 'msg msg-m';
-                myMsg.innerText = input.value;
-                display.appendChild(myMsg);
-                input.value = "";
-                display.scrollTop = display.scrollHeight;
-
+                // انتهاء حركة الاختفاء (الانتقال) ثم إخفاء بالكامل وإظهار نافذة الأب
                 setTimeout(() => {
-                    const friendMsg = document.createElement('div');
-                    friendMsg.className = 'msg msg-f';
-                    friendMsg.innerText = "اختيار مذهل! الفهد الأسود بعيونه المتوهجة الساحرة والحصان الأصيل يعطيان هيبة وفخامة خيالية للموقع وطابعاً فريداً جداً. 🖤🌌";
-                    display.appendChild(friendMsg);
-                    display.scrollTop = display.scrollHeight;
-                }, 1000);
-            }
-        }
+                    momSplash.style.display = 'none';
+                    dadSplash.style.display = 'flex';
+                    
+                    // 2. بعد 5 ثوانٍ أخرى، تختفي نافذة بابا وينفتح التطبيق
+                    setTimeout(() => {
+                        dadSplash.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            dadSplash.style.display = 'none';
+                            // إظهار التطبيق الرئيسي
+                            mainApp.style.opacity = '1';
+                        }, 1500); // وقت حركة الاختفاء لنافذة الأب
 
-        let canvas, ctx, painting = false;
-        function setupCanvas() {
-            canvas = document.getElementById('canvas');
-            ctx = canvas.getContext('2d');
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = 180;
-            ctx.lineWidth = 4;
-            ctx.lineCap = 'round';
+                    }, 5000); // مدة بقاء نافذة بابا (5 ثوانٍ)
 
-            canvas.addEventListener('mousedown', () => painting = true);
-            canvas.addEventListener('mouseup', () => { painting = false; ctx.beginPath(); });
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('touchstart', () => painting = true);
-            canvas.addEventListener('touchend', () => { painting = false; ctx.beginPath(); });
-            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
-        }
+                }, 1500); // وقت حركة الاختفاء لنافذة الأم
 
-        function draw(e) {
-            if(!painting) return;
-            ctx.strokeStyle = document.getElementById('paintColor').value;
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-
-        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+            }, 5000); // مدة بقاء نافذة أمي (5 ثوانٍ)
+        });
     </script>
 </body>
-                                                                                                                              </html>
+                    </html>
+                    
