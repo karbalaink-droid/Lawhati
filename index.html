@@ -3,47 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق لوحتي 🎨</title>
+    <title>تطبيق لوحتي</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f9fa;
-            color: #333;
-            text-align: center;
-            padding: 50px 20px;
+            background-color: #fff5f7;
+            color: #4a4a4a;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        .container {
-            max-width: 600px;
+
+        /* 1. تصميم الشاشة الترحيبية */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .welcome-card {
             background: white;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            margin: 0 auto;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
         }
-        h1 {
-            color: #e91e63;
-            font-size: 2.5rem;
+        .welcome-card h1 { color: #d81b60; margin-bottom: 15px; }
+
+        /* 2. تصميم الواجهة الرئيسية (مخفية في البداية) */
+        #main-content {
+            display: none;
+            opacity: 0;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: opacity 0.8s ease-in-out;
         }
-        p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #555;
-        }
-        .brush {
-            font-size: 4rem;
+        .app-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(255, 182, 193, 0.2);
             margin-bottom: 20px;
         }
+        h2 { color: #d81b60; margin-top: 0; font-size: 18px; display: flex; align-items: center; gap: 8px;}
+
+        /* صندوق الكتابة */
+        textarea {
+            width: 100%;
+            height: 70px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+            font-family: inherit;
+        }
+        button {
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        .notes-list { text-align: right; margin-top: 10px; }
+        .note-item { background: #fff0f3; padding: 6px; border-radius: 6px; margin-bottom: 5px; font-size: 14px; border-right: 3px solid #d81b60;}
+
+        /* لوحة تصميم الصور (الرسم) */
+        #canvas {
+            border: 2px dashed #ffb6c1;
+            background: white;
+            border-radius: 10px;
+            cursor: crosshair;
+            width: 100%;
+            height: 200px;
+            touch-action: none; /* لمنع اهتزاز الشاشة أثناء الرسم بالهاتف */
+        }
+        .canvas-tools { display: flex; gap: 10px; margin-top: 8px; align-items: center; }
+
+        /* صندوق التكلم مع صديق */
+        .chat-box {
+            border: 1px solid #ffe4e1;
+            border-radius: 10px;
+            height: 120px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #fafafa;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .chat-msg { margin-bottom: 8px; padding: 6px; border-radius: 8px; max-width: 80%; }
+        .msg-friend { background: #ffe4e1; align-self: flex-start; }
+        .msg-me { background: #d81b60; color: white; margin-right: auto; text-align: left; }
+        .chat-input-container { display: flex; gap: 5px; }
+        .chat-input { flex: 1; border: 2px solid #ffb6c1; border-radius: 15px; padding: 5px 10px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="brush">🎨✨</div>
-        <h1>تطبيق لوحتي</h1>
-        <p>مساحتك الخاصة ومرسمك مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
-        <p>جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
+    <!-- 1. الشاشة الترحيبية -->
+    <div id="splash-screen">
+        <div class="welcome-card">
+            <div style="font-size: 50px;">✨🎨</div>
+            <h1>تطبيق لوحتي</h1>
+            <p>مساحتكِ الخاصة ومرسمكِ مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
+            <p>جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
+        </div>
     </div>
 
+    <!-- 2. الواجهة الرئيسية للبرنامج -->
+    <div id="main-content">
+        
+        <!-- مكان الكتابة -->
+        <div class="app-card">
+            <h2>📝 مساحة الكتابة والتدوين</h2>
+            <textarea id="noteInput" placeholder="اكتبي أفكاركِ أو ملاحظاتكِ هنا..."></textarea>
+            <button onclick="addNote()">حفظ الملاحظة ✨</button>
+            <div class="notes-list" id="notesContainer"></div>
+        </div>
+
+        <!-- مكان تصميم الصور والرسم -->
+        <div class="app-card">
+            <h2>🎨 لوحة تصميم الصور والرسم</h2>
+            <canvas id="canvas"></canvas>
+            <div class="canvas-tools">
+                <label>اللون:</label>
+                <input type="color" id="paintColor" value="#d81b60">
+                <button onclick="clearCanvas()" style="background-color: #777;">مسح اللوحة 🧹</button>
+            </div>
+        </div>
+
+        <!-- التكلم مع صديق -->
+        <div class="app-card">
+            <h2>💬 التكلم مع صديق الرسام</h2>
+            <div class="chat-box" id="chatBox">
+                <div class="chat-msg msg-friend">مرحباً يا فنانة! ما هي اللوحة الجميلة التي تخططين لرسمها اليوم؟ 🎨</div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="اكتبي رسالتكِ هنا...">
+                <button onclick="sendChatMessage()" style="margin-top:0;">إرسال</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // كود تشغيل الشاشة الترحيبية ثم الانتقال للرئيسية تلقائياً بعد 3 ثوانٍ
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const main = document.getElementById('main-content');
+                
+                splash.style.opacity = 0;
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    main.style.display = 'block';
+                    setTimeout(() => { main.style.opacity = 1; setupCanvas(); }, 50);
+                }, 800);
+            }, 3000); // 3000 تعني 3 ثوانٍ
+        });
+
+        // كود حفظ الملاحظات
+        function addNote() {
+            const input = document.getElementById('noteInput');
+            const container = document.getElementById('notesContainer');
+            if(input.value.trim() !== "") {
+                const div = document.createElement('div');
+                div.className = 'note-item';
+                div.innerText = input.value;
+                container.appendChild(div);
+                input.value = "";
+            }
+        }
+
+        // كود لوحة الرسم وتصميم الصور
+        let canvas, ctx, painting = false;
+        function setupCanvas() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            
+            // ضبط أبعاد اللوحة لتناسب الشاشة
+            canvas.width = canvas.parentElement.clientWidth - 44;
+            canvas.height = 200;
+            
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+
+            // فعاليات الرسم بالماوس أو اللمس
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('touchstart', startPosition);
+            canvas.addEventListener('touchend', endPosition);
+            canvas.addEventListener('touchmove', drawMobile);
+        }
+
+        function startPosition(e) { painting = true; draw(e); }
+        function endPosition() { painting = false; ctx.beginPath(); }
+        
+        function draw(e) {
+            if(!painting) return;
+            ctx.strokeStyle = document.getElementById('paintColor').value;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function drawMobile(e) {
+            e.preventDefault();
+            draw(e);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // كود التكلم مع الصديق
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const chatBox = document.getElementById('chatBox');
+            if(input.value.trim() !== "") {
+                // رسالتي
+                const myMsg = document.createElement('div');
+                myMsg.className = 'chat-msg msg-me';
+                myMsg.innerText = input.value;
+                chatBox.appendChild(myMsg);
+                
+                const currentText = input.value;
+                input.value = "";
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // رد تلقائي ذكي من الصديق بعد ثانية
+                setTimeout(() => {
+                    const friendMsg = document.createElement('div');
+                    friendMsg.className = 'chat-msg msg-friend';
+                    friendMsg.innerText = "واااو، فكرة مذهلة! ألوان الماركرز والأكريليك ستجعلها تبدو ساحرة جداً، استمري بالإبداع! ✨🌸";
+                    chatBox.appendChild(friendMsg);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        }
+    </script>
 </body>
-</html>
+    </html>
+    
