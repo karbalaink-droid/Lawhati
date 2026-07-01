@@ -1,222 +1,331 @@
-<!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق لوحتي</title>
+    <title>مرسم لوحتي الملكي</title>
     <style>
+        :root {
+            --bg-color: #05070c; /* أسود ملكي عميق مع مسحة نيلي */
+            --card-bg: rgba(10, 15, 30, 0.9); /* خلفية كارد مدمجة داكنة */
+            --accent-color: #00bfff; /* نيلي نيون متوهج */
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fff5f7;
-            color: #4a4a4a;
+            background-color: var(--bg-color);
+            color: #f1f5f9;
             margin: 0;
-            padding: 0;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* 1. تصميم الشاشة الترحيبية */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* حاوية استعراض الصور الأسطورية الخاصة بكِ */
+        .luxury-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             width: 100%;
-            height: 100%;
-            background-color: #fff5f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .welcome-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-        .welcome-card h1 { color: #d81b60; margin-bottom: 15px; }
-
-        /* 2. تصميم الواجهة الرئيسية (مخفية في البداية) */
-        #main-content {
-            display: none;
-            opacity: 0;
-            width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .app-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 8px 16px rgba(255, 182, 193, 0.2);
+            max-width: 550px;
             margin-bottom: 20px;
         }
-        h2 { color: #d81b60; margin-top: 0; font-size: 18px; display: flex; align-items: center; gap: 8px;}
 
-        /* صندوق الكتابة */
-        textarea {
+        .gallery-item {
+            height: 140px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        .gallery-item img {
             width: 100%;
-            height: 70px;
-            border: 2px solid #ffb6c1;
-            border-radius: 10px;
-            padding: 10px;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+
+        .gallery-item span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: #00bfff;
+            text-align: center;
+            font-size: 11px;
+            padding: 5px 0;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            padding: 25px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        .header-card h1 { 
+            color: #ffffff; 
+            font-size: 26px; 
+            margin: 5px 0; 
+            font-weight: 800; 
+            text-shadow: 0 0 15px rgba(0, 191, 255, 0.6); 
+        }
+
+        .luxury-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .luxury-card h2 { 
+            color: #00bfff; 
+            font-size: 17px; 
+            margin-top: 0; 
+            margin-bottom: 15px;
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+        }
+
+        /* أدوات الذكاء الاصطناعي لتوليد الصور */
+        .ai-textarea {
+            width: 100%;
+            height: 85px;
+            background: #020617;
+            border: 2px solid #1e293b;
+            color: white;
+            border-radius: 14px;
+            padding: 12px;
             box-sizing: border-box;
             resize: none;
             font-family: inherit;
+            outline: none;
+            transition: 0.3s;
         }
-        button {
-            background-color: #d81b60;
+
+        .ai-textarea:focus { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); }
+        
+        .luxury-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 8px;
-            font-weight: bold;
-        }
-        .notes-list { text-align: right; margin-top: 10px; }
-        .note-item { background: #fff0f3; padding: 6px; border-radius: 6px; margin-bottom: 5px; font-size: 14px; border-right: 3px solid #d81b60;}
-
-        /* لوحة تصميم الصور (الرسم) */
-        #canvas {
-            border: 2px dashed #ffb6c1;
-            background: white;
-            border-radius: 10px;
-            cursor: crosshair;
-            width: 100%;
-            height: 200px;
-            touch-action: none; /* لمنع اهتزاز الشاشة أثناء الرسم بالهاتف */
-        }
-        .canvas-tools { display: flex; gap: 10px; margin-top: 8px; align-items: center; }
-
-        /* صندوق التكلم مع صديق */
-        .chat-box {
-            border: 1px solid #ffe4e1;
-            border-radius: 10px;
-            height: 120px;
-            overflow-y: auto;
-            padding: 10px;
-            background: #fafafa;
-            margin-bottom: 8px;
+            padding: 12px 20px;
+            border-radius: 14px;
             font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(3, 105, 161, 0.4);
+            transition: 0.3s;
         }
-        .chat-msg { margin-bottom: 8px; padding: 6px; border-radius: 8px; max-width: 80%; }
-        .msg-friend { background: #ffe4e1; align-self: flex-start; }
-        .msg-me { background: #d81b60; color: white; margin-right: auto; text-align: left; }
-        .chat-input-container { display: flex; gap: 5px; }
-        .chat-input { flex: 1; border: 2px solid #ffb6c1; border-radius: 15px; padding: 5px 10px; }
+
+        .luxury-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 22px rgba(3, 105, 161, 0.6); 
+        }
+
+        .generated-image-container {
+            margin-top: 15px;
+            width: 100%;
+            min-height: 250px;
+            border-radius: 16px;
+            background: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #1e293b;
+            overflow: hidden;
+        }
+
+        .generated-image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* اللوحة الثانوية للرسم التخطيطي */
+        .secondary-panel { display: none; margin-top: 15px; }
+        #canvas {
+            border: 1px solid var(--accent-color);
+            background: #ffffff;
+            border-radius: 12px;
+            width: 100%;
+            height: 180px;
+            touch-action: none;
+        }
+
+        /* جزء صندوق المحادثة المستوحى من ألوانك الفخمة */
+        .chat-display { height: 120px; overflow-y: auto; background: #020617; border-radius: 12px; padding: 12px; border: 1px solid #1e293b; margin-bottom: 10px; }
+        .msg { padding: 8px 12px; border-radius: 14px; font-size: 13px; margin-bottom: 8px; max-width: 85%; line-height: 1.4; }
+        .msg-f { background: #0f172a; color: #cbd5e1; margin-left: auto; border-bottom-right-radius: 2px; border: 1px solid #1e293b; }
+        .msg-m { background: #0369a1; color: white; margin-right: auto; border-bottom-left-radius: 2px; }
+        
+        .chat-inputs { display: flex; gap: 8px; }
+        .chat-in { flex: 1; background: #020617; border: 2px solid #1e293b; color: white; border-radius: 12px; padding: 8px 12px; outline: none; }
+        .chat-in:focus { border-color: var(--accent-color); }
     </style>
 </head>
 <body>
 
-    <!-- 1. الشاشة الترحيبية -->
-    <div id="splash-screen">
-        <div class="welcome-card">
-            <div style="font-size: 50px;">✨🎨</div>
-            <h1>تطبيق لوحتي</h1>
-            <p>مساحتكِ الخاصة ومرسمكِ مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
-            <p>جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
+    <!-- معرض صور الحيوانات الأسطورية الخاصة بكِ فخامة حقيقية! -->
+    <div class="luxury-gallery">
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&q=80" alt="الحصان الفخم">
+            <span>الكبرياء الملكي 🐎</span>
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?auto=format&fit=crop&w=300&q=80" alt="الفهد الأسود">
+            <span>الغموض الحاسم 🐆</span>
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=300&q=80" alt="الحوت النجمي">
+            <span>عمق المحيط 🐋</span>
         </div>
     </div>
 
-    <!-- 2. الواجهة الرئيسية للبرنامج -->
-    <div id="main-content">
-        
-        <!-- مكان الكتابة -->
-        <div class="app-card">
-            <h2>📝 مساحة الكتابة والتدوين</h2>
-            <textarea id="noteInput" placeholder="اكتبي أفكاركِ أو ملاحظاتكِ هنا..."></textarea>
-            <button onclick="addNote()">حفظ الملاحظة ✨</button>
-            <div class="notes-list" id="notesContainer"></div>
+    <div class="container">
+        <!-- كارد الواجهة -->
+        <div class="header-card">
+            <div style="font-size: 35px; filter: drop-shadow(0 0 8px #00bfff);">✨🌌</div>
+            <h1>مَرسَم لَوحَتي المَلَكي</h1>
+            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0 0;">بوابتكِ الخاصة لابتكار وتوليد أفخم اللوحات الكونية الداكنة</p>
         </div>
 
-        <!-- مكان تصميم الصور والرسم -->
-        <div class="app-card">
-            <h2>🎨 لوحة تصميم الصور والرسم</h2>
-            <canvas id="canvas"></canvas>
-            <div class="canvas-tools">
-                <label>اللون:</label>
-                <input type="color" id="paintColor" value="#d81b60">
-                <button onclick="clearCanvas()" style="background-color: #777;">مسح اللوحة 🧹</button>
+        <!-- الأداة الأساسية: منشئ الصور حسب الطلب -->
+        <div class="luxury-card">
+            <h2>🌌 إنشاء وتوليد الصور الفخمة بالطلب الفوري</h2>
+            <div class="ai-input-group">
+                <textarea class="ai-textarea" id="imagePrompt" placeholder="اكتبي تفاصيل لوحتك الفخمة هنا... مثال: فهد أسود بعيون متوهجة في ليلة نيليّة داكنة مع بريق نجوم..."></textarea>
+                <button class="luxury-btn" onclick="generateImage()">بدء التصميم الذكي والأنيق 🔮</button>
+            </div>
+            <div class="generated-image-container" id="imageContainer">
+                <div id="placeholderText" style="color: #475569; font-size: 13px; text-align: center; padding: 15px;">بانتظار كتابة فكرتكِ ليرسمها التطبيق فوراً بأعلى فخامة ✨</div>
             </div>
         </div>
 
-        <!-- التكلم مع صديق -->
-        <div class="app-card">
-            <h2>💬 التكلم مع صديق الرسام</h2>
-            <div class="chat-box" id="chatBox">
-                <div class="chat-msg msg-friend">مرحباً يا فنانة! ما هي اللوحة الجميلة التي تخططين لرسمها اليوم؟ 🎨</div>
-            </div>
-            <div class="chat-input-container">
-                <input type="text" class="chat-input" id="chatInput" placeholder="اكتبي رسالتكِ هنا...">
-                <button onclick="sendChatMessage()" style="margin-top:0;">إرسال</button>
+        <!-- الأداة الثانوية: لوحة الرسم السريع -->
+        <div class="luxury-card">
+            <h2>🖌️ لوحة التخطيط والتنسيق السريع (ثانوي)</h2>
+            <button class="luxury-btn" style="background: #1e293b; margin: 0; box-shadow: none;" onclick="toggleCanvasPanel()">فتح / إغلاق لوحة الرسم 🛠️</button>
+            
+            <div class="secondary-panel" id="canvasPanel">
+                <canvas id="canvas"></canvas>
+                <div style="margin-top: 10px; display: flex; gap: 12px; align-items: center; font-size: 14px;">
+                    <label>لون الفرشاة:</label>
+                    <input type="color" id="paintColor" value="#00bfff" style="background: none; border: none; cursor: pointer;">
+                    <button onclick="clearCanvas()" style="background: #991b1b; color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; margin-right: auto;">مسح الشاشة 🧹</button>
+                </div>
             </div>
         </div>
 
+        <!-- مستشارك الفني وصديقك الرقمي -->
+        <div class="luxury-card">
+            <h2>💬 المستشار الفني والمساعد الخاص بكِ</h2>
+            <div class="chat-display" id="chatDisplay">
+                <div class="msg msg-f">مرحباً بكِ في جناحكِ الملكي الداكن. ألوان الأسود والنيلي مع هيبة الخيل والفهود تعكس ذوقاً فنياً في غاية القوة والفخامة! كيف يمكنني مساعدتكِ اليوم؟ 🌌👑</div>
+            </div>
+            <div class="chat-inputs">
+                <input type="text" class="chat-in" id="chatInput" placeholder="ناقشي فكرتكِ الفنية هنا...">
+                <button class="luxury-btn" onclick="sendChat()" style="margin: 0; width: auto; padding: 0 20px;">إرسال</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // كود تشغيل الشاشة الترحيبية ثم الانتقال للرئيسية تلقائياً بعد 3 ثوانٍ
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                const main = document.getElementById('main-content');
-                
-                splash.style.opacity = 0;
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    main.style.display = 'block';
-                    setTimeout(() => { main.style.opacity = 1; setupCanvas(); }, 50);
-                }, 800);
-            }, 3000); // 3000 تعني 3 ثوانٍ
-        });
-
-        // كود حفظ الملاحظات
-        function addNote() {
-            const input = document.getElementById('noteInput');
-            const container = document.getElementById('notesContainer');
-            if(input.value.trim() !== "") {
-                const div = document.createElement('div');
-                div.className = 'note-item';
-                div.innerText = input.value;
-                container.appendChild(div);
-                input.value = "";
+        function toggleCanvasPanel() {
+            const panel = document.getElementById('canvasPanel');
+            if(panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+                setupCanvas();
             }
         }
 
-        // كود لوحة الرسم وتصميم الصور
+        // كود محاكاة توليد الصور بشكل يطابق الألوان الأسطورية والحيوانات التي تفضلينها
+        function generateImage() {
+            const prompt = document.getElementById('imagePrompt').value.trim();
+            const container = document.getElementById('imageContainer');
+            if(prompt === "") { alert("من فضلكِ، اكتبي الوصف الفخم للوحة أولاً!"); return; }
+
+            container.innerHTML = '<div style="color: #00bfff; font-size: 14px; text-align: center; animation: pulse 1.5s infinite;">🌌 يتأمل الذكاء الاصطناعي سحر فكرتكِ... جاري نسج اللوحة الملكية الآن...</div>';
+
+            setTimeout(() => {
+                const img = document.createElement('img');
+                
+                // اختيار الصورة بناء على كلماتك الفخمة والأسطورية
+                if(prompt.includes("حوت") || prompt.includes("بحر") || prompt.includes("ازرق")) {
+                    img.src = "https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=600&q=80";
+                } else if(prompt.includes("فهد") || prompt.includes("نمر") || prompt.includes("عيون")) {
+                    img.src = "https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?auto=format&fit=crop&w=600&q=80";
+                } else {
+                    // اختيار افتراضي لوحة خيل سوداء كلاسيكية فخمة جداً متناسقة مع الأسود والنيلي
+                    img.src = "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80";
+                }
+                
+                container.innerHTML = "";
+                container.appendChild(img);
+            }, 2500);
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chatInput');
+            const display = document.getElementById('chatDisplay');
+            if(input.value.trim() !== "") {
+                const myMsg = document.createElement('div');
+                myMsg.className = 'msg msg-m';
+                myMsg.innerText = input.value;
+                display.appendChild(myMsg);
+                input.value = "";
+                display.scrollTop = display.scrollHeight;
+
+                setTimeout(() => {
+                    const friendMsg = document.createElement('div');
+                    friendMsg.className = 'msg msg-f';
+                    friendMsg.innerText = "هذا الاختيار والتفكير أسطوري! دمج الأسود والنيلي مع عمق صوركِ يعطي الموقع هيبة وهدوء لا يملكه إلا المبدعون الحقيقيون. 🖤🌌";
+                    display.appendChild(friendMsg);
+                    display.scrollTop = display.scrollHeight;
+                }, 1200);
+            }
+        }
+
         let canvas, ctx, painting = false;
         function setupCanvas() {
             canvas = document.getElementById('canvas');
             ctx = canvas.getContext('2d');
-            
-            // ضبط أبعاد اللوحة لتناسب الشاشة
-            canvas.width = canvas.parentElement.clientWidth - 44;
-            canvas.height = 200;
-            
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 180;
             ctx.lineWidth = 4;
             ctx.lineCap = 'round';
 
-            // فعاليات الرسم بالماوس أو اللمس
-            canvas.addEventListener('mousedown', startPosition);
-            canvas.addEventListener('mouseup', endPosition);
+            canvas.addEventListener('mousedown', () => painting = true);
+            canvas.addEventListener('mouseup', () => { painting = false; ctx.beginPath(); });
             canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('touchstart', startPosition);
-            canvas.addEventListener('touchend', endPosition);
-            canvas.addEventListener('touchmove', drawMobile);
+            canvas.addEventListener('touchstart', () => painting = true);
+            canvas.addEventListener('touchend', () => { painting = false; ctx.beginPath(); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
         }
 
-        function startPosition(e) { painting = true; draw(e); }
-        function endPosition() { painting = false; ctx.beginPath(); }
-        
         function draw(e) {
             if(!painting) return;
             ctx.strokeStyle = document.getElementById('paintColor').value;
@@ -229,40 +338,7 @@
             ctx.moveTo(x, y);
         }
 
-        function drawMobile(e) {
-            e.preventDefault();
-            draw(e);
-        }
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // كود التكلم مع الصديق
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const chatBox = document.getElementById('chatBox');
-            if(input.value.trim() !== "") {
-                // رسالتي
-                const myMsg = document.createElement('div');
-                myMsg.className = 'chat-msg msg-me';
-                myMsg.innerText = input.value;
-                chatBox.appendChild(myMsg);
-                
-                const currentText = input.value;
-                input.value = "";
-                chatBox.scrollTop = chatBox.scrollHeight;
-
-                // رد تلقائي ذكي من الصديق بعد ثانية
-                setTimeout(() => {
-                    const friendMsg = document.createElement('div');
-                    friendMsg.className = 'chat-msg msg-friend';
-                    friendMsg.innerText = "واااو، فكرة مذهلة! ألوان الماركرز والأكريليك ستجعلها تبدو ساحرة جداً، استمري بالإبداع! ✨🌸";
-                    chatBox.appendChild(friendMsg);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }, 1000);
-            }
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
     </script>
 </body>
     </html>
