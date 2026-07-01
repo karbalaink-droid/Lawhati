@@ -1,20 +1,20 @@
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرسم لوحتي الملكي</title>
+    <title>تطبيق لوحتي 🎨</title>
     <style>
         :root {
-            --bg-color: #05070c; /* أسود ملكي عميق مع مسحة نيلي */
-            --card-bg: rgba(10, 15, 30, 0.9); /* خلفية كارد مدمجة داكنة */
-            --accent-color: #00bfff; /* نيلي نيون متوهج */
+            --bg-color: #030712; /* أسود ملكي عميق جداً */
+            --card-bg: rgba(11, 17, 32, 0.95); /* خلفية كارد مظلمة وساحرة */
+            --accent-color: #00d2ff; /* نيلي نيون متوهج يناسب عيون الفهد والحوت */
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: #f1f5f9;
+            color: #f3f4f6;
             margin: 0;
             padding: 15px;
             display: flex;
@@ -23,22 +23,57 @@
             min-height: 100vh;
         }
 
-        /* حاوية استعراض الصور الأسطورية الخاصة بكِ */
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* كارد الواجهة المحدث ليكون شديد الفخامة */
+        .header-card {
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            padding: 30px 20px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+        }
+
+        .header-card .emoji {
+            font-size: 45px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.5));
+        }
+
+        .header-card h1 { 
+            color: #ffffff; 
+            font-size: 28px; 
+            margin: 10px 0; 
+            font-weight: 800; 
+            letter-spacing: 0.5px;
+        }
+
+        .header-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        /* معرض الصور الأسطورية (الفهد الأسود، الحصان الغامض، الحوت النجمي) */
         .luxury-gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 550px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .gallery-item {
-            height: 140px;
+            height: 150px;
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(0, 191, 255, 0.3);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             position: relative;
         }
 
@@ -50,7 +85,7 @@
         }
 
         .gallery-item:hover img {
-            transform: scale(1.15);
+            transform: scale(1.12);
         }
 
         .gallery-item span {
@@ -58,35 +93,12 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            color: #00bfff;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            color: #00d2ff;
             text-align: center;
             font-size: 11px;
-            padding: 5px 0;
+            padding: 6px 0;
             font-weight: bold;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 550px;
-        }
-
-        .header-card {
-            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-            padding: 25px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 191, 255, 0.2);
-        }
-
-        .header-card h1 { 
-            color: #ffffff; 
-            font-size: 26px; 
-            margin: 5px 0; 
-            font-weight: 800; 
-            text-shadow: 0 0 15px rgba(0, 191, 255, 0.6); 
         }
 
         .luxury-card {
@@ -94,23 +106,19 @@
             backdrop-filter: blur(12px);
             padding: 25px;
             border-radius: 24px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .luxury-card h2 { 
-            color: #00bfff; 
-            font-size: 17px; 
+            color: #00d2ff; 
+            font-size: 16px; 
             margin-top: 0; 
             margin-bottom: 15px;
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            text-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
+            font-weight: 600;
         }
 
-        /* أدوات الذكاء الاصطناعي لتوليد الصور */
         .ai-textarea {
             width: 100%;
             height: 85px;
@@ -126,7 +134,10 @@
             transition: 0.3s;
         }
 
-        .ai-textarea:focus { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); }
+        .ai-textarea:focus { 
+            border-color: var(--accent-color); 
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.3); 
+        }
         
         .luxury-btn {
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
@@ -139,19 +150,19 @@
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(3, 105, 161, 0.4);
+            box-shadow: 0 5px 15px rgba(3, 105, 161, 0.3);
             transition: 0.3s;
         }
 
         .luxury-btn:hover { 
             transform: translateY(-2px); 
-            box-shadow: 0 8px 22px rgba(3, 105, 161, 0.6); 
+            box-shadow: 0 8px 22px rgba(3, 105, 161, 0.5); 
         }
 
         .generated-image-container {
             margin-top: 15px;
             width: 100%;
-            min-height: 250px;
+            min-height: 280px;
             border-radius: 16px;
             background: #020617;
             display: flex;
@@ -163,7 +174,6 @@
 
         .generated-image-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* اللوحة الثانوية للرسم التخطيطي */
         .secondary-panel { display: none; margin-top: 15px; }
         #canvas {
             border: 1px solid var(--accent-color);
@@ -174,7 +184,6 @@
             touch-action: none;
         }
 
-        /* جزء صندوق المحادثة المستوحى من ألوانك الفخمة */
         .chat-display { height: 120px; overflow-y: auto; background: #020617; border-radius: 12px; padding: 12px; border: 1px solid #1e293b; margin-bottom: 10px; }
         .msg { padding: 8px 12px; border-radius: 14px; font-size: 13px; margin-bottom: 8px; max-width: 85%; line-height: 1.4; }
         .msg-f { background: #0f172a; color: #cbd5e1; margin-left: auto; border-bottom-right-radius: 2px; border: 1px solid #1e293b; }
@@ -187,43 +196,40 @@
 </head>
 <body>
 
-    <!-- معرض صور الحيوانات الأسطورية الخاصة بكِ فخامة حقيقية! -->
-    <div class="luxury-gallery">
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&q=80" alt="الحصان الفخم">
-            <span>الكبرياء الملكي 🐎</span>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?auto=format&fit=crop&w=300&q=80" alt="الفهد الأسود">
-            <span>الغموض الحاسم 🐆</span>
-        </div>
-        <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=300&q=80" alt="الحوت النجمي">
-            <span>عمق المحيط 🐋</span>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- كارد الواجهة -->
         <div class="header-card">
-            <div style="font-size: 35px; filter: drop-shadow(0 0 8px #00bfff);">✨🌌</div>
-            <h1>مَرسَم لَوحَتي المَلَكي</h1>
-            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0 0;">بوابتكِ الخاصة لابتكار وتوليد أفخم اللوحات الكونية الداكنة</p>
+            <div class="emoji">✨🎨</div>
+            <h1>تطبيق لوحتي</h1>
+            <p>مساحتكِ الخاصة ومرسمكِ مع رفيق الرسم للغوص في بحر الفن والإبداع.</p>
+            <p style="font-weight: bold; color: #00d2ff;">جاهزون لتنسيق ألوان الأكريليك والماركرز وتخيل اللوحات القادمة! 🖌️</p>
+
+            <div class="luxury-gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=400&q=80" alt="فهد أسود ملكي">
+                    <span>الفهد الأسود 🐆</span>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa52?auto=format&fit=crop&w=400&q=80" alt="حصان أسود فخم">
+                    <span>الكبرياء الملكي 🐎</span>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=400&q=80" alt="الحوت النجمي">
+                    <span>الحوت الساحر 🐋</span>
+                </div>
+            </div>
         </div>
 
-        <!-- الأداة الأساسية: منشئ الصور حسب الطلب -->
         <div class="luxury-card">
-            <h2>🌌 إنشاء وتوليد الصور الفخمة بالطلب الفوري</h2>
+            <h2>🌌 تخيل وتوليد اللوحات الفخمة فوراً</h2>
             <div class="ai-input-group">
-                <textarea class="ai-textarea" id="imagePrompt" placeholder="اكتبي تفاصيل لوحتك الفخمة هنا... مثال: فهد أسود بعيون متوهجة في ليلة نيليّة داكنة مع بريق نجوم..."></textarea>
+                <textarea class="ai-textarea" id="imagePrompt" placeholder="اكتبي تفاصيل لوحتكِ القادمة هنا... مثال: فهد أسود بعيون زرقاء متوهجة في ليلة نيليّة داكنة مليئة بالنجوم البراقة..."></textarea>
                 <button class="luxury-btn" onclick="generateImage()">بدء التصميم الذكي والأنيق 🔮</button>
             </div>
             <div class="generated-image-container" id="imageContainer">
-                <div id="placeholderText" style="color: #475569; font-size: 13px; text-align: center; padding: 15px;">بانتظار كتابة فكرتكِ ليرسمها التطبيق فوراً بأعلى فخامة ✨</div>
+                <div id="placeholderText" style="color: #4b5563; font-size: 13px; text-align: center; padding: 15px;">بانتظار كتابة فكرتكِ ليرسمها التطبيق فوراً بأعلى فخامة ✨</div>
             </div>
         </div>
 
-        <!-- الأداة الثانوية: لوحة الرسم السريع -->
         <div class="luxury-card">
             <h2>🖌️ لوحة التخطيط والتنسيق السريع (ثانوي)</h2>
             <button class="luxury-btn" style="background: #1e293b; margin: 0; box-shadow: none;" onclick="toggleCanvasPanel()">فتح / إغلاق لوحة الرسم 🛠️</button>
@@ -232,17 +238,16 @@
                 <canvas id="canvas"></canvas>
                 <div style="margin-top: 10px; display: flex; gap: 12px; align-items: center; font-size: 14px;">
                     <label>لون الفرشاة:</label>
-                    <input type="color" id="paintColor" value="#00bfff" style="background: none; border: none; cursor: pointer;">
+                    <input type="color" id="paintColor" value="#00d2ff" style="background: none; border: none; cursor: pointer;">
                     <button onclick="clearCanvas()" style="background: #991b1b; color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; margin-right: auto;">مسح الشاشة 🧹</button>
                 </div>
             </div>
         </div>
 
-        <!-- مستشارك الفني وصديقك الرقمي -->
         <div class="luxury-card">
             <h2>💬 المستشار الفني والمساعد الخاص بكِ</h2>
             <div class="chat-display" id="chatDisplay">
-                <div class="msg msg-f">مرحباً بكِ في جناحكِ الملكي الداكن. ألوان الأسود والنيلي مع هيبة الخيل والفهود تعكس ذوقاً فنياً في غاية القوة والفخامة! كيف يمكنني مساعدتكِ اليوم؟ 🌌👑</div>
+                <div class="msg msg-f">مرحباً بكِ في جناحكِ الفني الداكن. ألوان الأسود والنيلي مع هيبة الخيل والفهود السوداء تعكس ذوقاً فنياً نادراً وفي غاية القوة. كيف نخطط للوحتكِ القادمة؟ 🌌👑</div>
             </div>
             <div class="chat-inputs">
                 <input type="text" class="chat-in" id="chatInput" placeholder="ناقشي فكرتكِ الفنية هنا...">
@@ -262,30 +267,27 @@
             }
         }
 
-        // كود محاكاة توليد الصور بشكل يطابق الألوان الأسطورية والحيوانات التي تفضلينها
         function generateImage() {
             const prompt = document.getElementById('imagePrompt').value.trim();
             const container = document.getElementById('imageContainer');
             if(prompt === "") { alert("من فضلكِ، اكتبي الوصف الفخم للوحة أولاً!"); return; }
 
-            container.innerHTML = '<div style="color: #00bfff; font-size: 14px; text-align: center; animation: pulse 1.5s infinite;">🌌 يتأمل الذكاء الاصطناعي سحر فكرتكِ... جاري نسج اللوحة الملكية الآن...</div>';
+            container.innerHTML = '<div style="color: #00d2ff; font-size: 14px; text-align: center; padding: 20px;">🌌 جاري نسج اللوحة الملكية الداكنة بناءً على طلبك الفخم...</div>';
 
             setTimeout(() => {
                 const img = document.createElement('img');
                 
-                // اختيار الصورة بناء على كلماتك الفخمة والأسطورية
-                if(prompt.includes("حوت") || prompt.includes("بحر") || prompt.includes("ازرق")) {
+                if(prompt.includes("حوت") || prompt.includes("بحر") || prompt.includes("محيط")) {
                     img.src = "https://images.unsplash.com/photo-1568430462989-4b16f61d2cfc?auto=format&fit=crop&w=600&q=80";
-                } else if(prompt.includes("فهد") || prompt.includes("نمر") || prompt.includes("عيون")) {
-                    img.src = "https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?auto=format&fit=crop&w=600&q=80";
+                } else if(prompt.includes("فهد") || prompt.includes("نمر") || prompt.includes("اسود") || prompt.includes("عيون")) {
+                    img.src = "https://images.unsplash.com/photo-1547721064-da6cfb341d50?auto=format&fit=crop&w=600&q=80";
                 } else {
-                    // اختيار افتراضي لوحة خيل سوداء كلاسيكية فخمة جداً متناسقة مع الأسود والنيلي
-                    img.src = "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80";
+                    img.src = "https://images.unsplash.com/photo-1553284965-83fd3e82fa52?auto=format&fit=crop&w=600&q=80";
                 }
                 
                 container.innerHTML = "";
                 container.appendChild(img);
-            }, 2500);
+            }, 2000);
         }
 
         function sendChat() {
@@ -302,10 +304,10 @@
                 setTimeout(() => {
                     const friendMsg = document.createElement('div');
                     friendMsg.className = 'msg msg-f';
-                    friendMsg.innerText = "هذا الاختيار والتفكير أسطوري! دمج الأسود والنيلي مع عمق صوركِ يعطي الموقع هيبة وهدوء لا يملكه إلا المبدعون الحقيقيون. 🖤🌌";
+                    friendMsg.innerText = "اختيار مذهل! الفهد الأسود بعيونه المتوهجة الساحرة والحصان الأصيل يعطيان هيبة وفخامة خيالية للموقع وطابعاً فريداً جداً. 🖤🌌";
                     display.appendChild(friendMsg);
                     display.scrollTop = display.scrollHeight;
-                }, 1200);
+                }, 1000);
             }
         }
 
@@ -341,5 +343,5 @@
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
     </script>
 </body>
-    </html>
-    
+                                                                                                                                                                              </html>
+                                                                                                                                                                              
