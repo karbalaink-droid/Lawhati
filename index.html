@@ -107,7 +107,7 @@
             line-height: 1.8;
         }
 
-        /* 3. نافذة الاستبيان */
+        /* 3. نافذة الاستبيان المتكامل الجديد */
         .survey-overlay {
             position: fixed;
             top: 0;
@@ -130,7 +130,7 @@
             padding: 30px;
             border-radius: 20px;
             border: 1px solid #233049;
-            max-width: 450px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -138,31 +138,34 @@
 
         .survey-card h2 {
             color: #38bdf8;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-size: 1.6rem;
         }
 
         .survey-card p {
             color: #94a3b8;
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .survey-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 5px;
         }
 
         .option-btn {
             background: #1e293b;
             border: 1px solid #334155;
             color: #cbd5e1;
-            padding: 12px;
+            padding: 11px 15px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             text-align: right;
             display: flex;
@@ -194,6 +197,7 @@
             cursor: pointer;
             width: 100%;
             transition: background 0.3s;
+            margin-top: 10px;
         }
 
         .submit-survey-btn:hover {
@@ -268,7 +272,7 @@
             display: block;
         }
 
-        /* تبويب 1: الدردشة المتكاملة */
+        /* تبويب 1: الدردشة الفنية والقرائية */
         .chat-wrapper {
             background: #151c2c;
             border-radius: 20px;
@@ -344,303 +348,5 @@
         .chat-input {
             flex: 1;
             background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 14px;
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .chat-input::placeholder {
-            color: #64748b;
-        }
-
-        .chat-input:focus {
-            border-color: #38bdf8;
-        }
-
-        .send-btn {
-            background: #38bdf8;
-            border: none;
-            color: #0b0f19;
-            padding: 0 24px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .send-btn:hover {
-            background: #0ea5e9;
-        }
-
-        /* تبويب 2: صديقة المواساة والتشجيع */
-        .friend-card {
-            background: linear-gradient(135deg, #1e1b4b 0%, #151c2c 100%);
-            border-radius: 24px;
-            border: 1px solid #312e81;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .friend-avatar {
-            width: 90px;
-            height: 90px;
-            background: #312e81;
-            border-radius: 500px;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            border: 2px solid #4338ca;
-        }
-
-        .friend-card h2 {
-            color: #f43f5e;
-            margin-bottom: 15px;
-        }
-
-        .friend-card p {
-            color: #cbd5e1;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            max-width: 600px;
-            margin: 0 auto 25px;
-        }
-
-        .support-btn {
-            background: #f43f5e;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .support-btn:hover {
-            background: #e11d48;
-        }
-
-        /* تبويب 3: استوديو اللوحات والمظهر الفخم */
-        .studio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .studio-panel {
-            background: #151c2c;
-            border-radius: 20px;
-            border: 1px solid #233049;
-            padding: 25px;
-        }
-
-        .studio-panel h3 {
-            color: #38bdf8;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            border-bottom: 1px solid #233049;
-            padding-bottom: 10px;
-        }
-
-        .theme-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .theme-btn {
-            padding: 15px;
-            border-radius: 14px;
-            border: 1px solid #334155;
-            background: #1e293b;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .theme-btn.active {
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
-        }
-
-        /* استوديو تخيل الصور العشوائية الفخمة */
-        .image-generator {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .canvas-display {
-            width: 100%;
-            height: 220px;
-            background: #0f1420;
-            border-radius: 14px;
-            border: 2px dashed #233049;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .canvas-display img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .placeholder-text {
-            color: #475569;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .generate-btn {
-            background: linear-gradient(90deg, #a855f7 0%, #38bdf8 100%);
-            color: #0b0f19;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: opacity 0.3s;
-        }
-
-        .generate-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* الحركات والتأثيرات */
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes fadeOutMain {
-            0% { opacity: 1; visibility: visible; }
-            99% { opacity: 0; visibility: visible; }
-            100% { opacity: 0; visibility: hidden; }
-        }
-
-        @keyframes fadeInNext {
-            from { opacity: 0; visibility: hidden; }
-            to { opacity: 1; visibility: visible; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 1. نافذة إهداء أمي العزيزة (تختفي بعد 5 ثواني) -->
-    <div class="gift-overlay-mom" id="momOverlay">
-        <div class="gift-card-mom">
-            <h1>أمي العزيزة 🤍🌿</h1>
-            <p>إلى أمي الرائعة.. كلما كبرتُ أدركتُ كم أن كلماتكِ الطيبة وتشجيعكِ لي هو سر قوتي وإبداعي الفني. هذا التطبيق أهديه لكِ كدليل على فخري واعتزازي بكِ وبكل ما تقدمينه لي دائماً.</p>
-        </div>
-    </div>
-
-    <!-- 2. نافذة إهداء أبي الغالي (تظهر من الثانية 5 وتختفي بالثانية 10) -->
-    <div class="gift-overlay-dad" id="dadOverlay">
-        <div class="gift-card-dad">
-            <h1>أبي الغالي 🖤✨</h1>
-            <p>إلى أبي وسندي.. ممتنة جداً لوجودك في حياتي، ولأنك دائماً تمنحني الأمان والتشجيع لأصل إلى أعلى مستويات النجاح والدراسة والفن. أهديكِ واجهة هذا التطبيق تعبيراً عن حبي وامتناني الصادق.</p>
-        </div>
-    </div>
-
-    <!-- 3. نافذة الاستبيان الجديد للذكاء الفني (تظهر في الثانية 10 حتى يتم الضغط) -->
-    <div class="survey-overlay" id="surveyOverlay">
-        <div class="survey-card">
-            <h2>الاستبيان الفني والتنظيمي 📋✍️</h2>
-            <p>اختر الأجواء الفنية والتعليمية التي تود إضافتها وتفعيلها اليوم داخل لوحتك الفنية:</p>
-            <div class="survey-options">
-                <button class="option-btn" onclick="toggleOption(this)">🎵 تشغيل الألحان الفنية الهادئة أثناء الدراسة</button>
-                <button class="option-btn" onclick="toggleOption(this)">🧪 مراجعة وحفظ الأعداد الذرية للجدول الدوري</button>
-                <button class="option-btn" onclick="toggleOption(this)">🎨 توليد أفكار تزيين المكتب والرفوف بالزهور</button>
-                <button class="option-btn" onclick="toggleOption(this)">🇬🇧 التدرب على قواعد اللغة الإنجليزية (Since)</button>
-            </div>
-            <button class="submit-survey-btn" onclick="closeSurvey()">تأكيد الاختيارات وبدء التطبيق الفخم</button>
-        </div>
-    </div>
-
-    <!-- 4. واجهة التطبيق الفنية الرئيسية -->
-    <div class="app-container" id="appMain">
-        <div class="app-header">
-            <h1>مـعـرض لـوحـتـي الـفـنـي الـمـتـكـامـل</h1>
-            <p>مساحتك الإبداعية والتعليمية الآمنة والمضمونة</p>
-        </div>
-
-        <!-- أزرار التنقل بين الأقسام -->
-        <div class="tabs-nav">
-            <button class="tab-link active" onclick="switchTab(event, 'chatTab')">💬 الدردشة الفنية</button>
-            <button class="tab-link" onclick="switchTab(event, 'friendTab')">🌸 صديقة المواساة</button>
-            <button class="tab-link" onclick="switchTab(event, 'studioTab')">🎨 استوديو التخيل</button>
-        </div>
-
-        <!-- تبويب 1: الدردشة المتكاملة والمحاكاة التعليمية -->
-        <div id="chatTab" class="tab-content active">
-            <div class="chat-wrapper">
-                <div class="chat-header">
-                    <div class="chat-header-title">
-                        <h3>الدردشة الذكية المدمجة</h3>
-                        <span>● متصلة الآن بالدعم الفني والموسيقي</span>
-                    </div>
-                </div>
-                <div class="chat-messages" id="chatBox">
-                    <div class="message bot">
-                        أهلاً بكِ يا فنانة! 🌟 أنا هنا لمساعدتكِ اليوم في ترتيب أفكاركِ الفنية، مراجعة العلوم الكيمياء والفيزياء، أو التدرب على نطق الأرقام بالإنجليزية وقواعد Since. كيف أقدر أساعدكِ؟
-                    </div>
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" class="chat-input" id="userInput" placeholder="اكتبي رسالتكِ أو سؤالكِ التعليمي هنا..." onkeypress="handleKeyPress(event)">
-                    <button class="send-btn" onclick="sendMessage()">إرسال</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- تبويب 2: صديقة المواساة والتشجيع عند التعب -->
-        <div id="friendTab" class="tab-content">
-            <div class="friend-card">
-                <div class="friend-avatar">🌸</div>
-                <h2>صديقتكِ الفنية المقربة</h2>
-                <p id="quoteText">"تذكري دائماً يا فنانة المستقبل أن التعب والجهد الذي تبذلينه اليوم في دراستكِ وفنكِ هو اللبنة الأساسية لبناء مستقبلكِ الباهر. خذي نفساً عميقاً، رتبي ألوان الماركرز الخاصة بكِ، واعلمي أنكِ قادرة على تحقيق المستحيل!"</p>
-                <button class="support-btn" onclick="changeQuote()">أحتاج جرعة تشجيع أخرى ✨</button>
-            </div>
-        </div>
-
-        <!-- تبويب 3: استوديو اللوحات وتغيير المظهر الفخم -->
-        <div id="studioTab" class="tab-content">
-            <div class="studio-grid">
-                <!-- لوحة التحكم بالمظهر والستايل الفاخر -->
-                <div class="studio-panel">
-                    <h3>تغيير مظهر وتخصيص ألوان التطبيق</h3>
-                    <div class="theme-selector">
-                        <button class="theme-btn active" onclick="changeTheme('dark', this)">الفهد الأسود الفخم 🖤</button>
-                        <button class="theme-btn" onclick="changeTheme('green', this)">الزمرد الأخضر الدافئ 💚</button>
-                        <button class="theme-btn" onclick="changeTheme('purple', this)">النيلية الساحرة 💜</button>
-                        <button class="theme-btn" onclick="changeTheme('pink', this)">الوردي الناعم البسيط 🌸</button>
-                    </div>
-                </div>
-
-                <!-- لوحة تخيل وتوليد اللوحات الإبداعية العشوائية -->
-                <div class="studio-panel">
-                    <h3>استوديو تخيل وتوليد اللوحات الفنية</h3>
-                    <div class="image-generator">
-                        <div class="canvas-display" id="canvasDisplay">
-                            <div class="placeholder-text" id="placeholderText">اضغطي على الزر بالأسفل لتخيل وتوليد لوحة فنية عشوائية فخمة وراقية تناسب ذوقكِ 🌊⛰️</div>
-                        </div>
- 
+            border: 1px
+    
