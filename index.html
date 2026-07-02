@@ -2,15 +2,403 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق لوحتي الفني</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #0b0f19; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; }
-        .welcome { text-align: center; border: 2px solid #38bdf8; padding: 30px; border-radius: 20px; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* نافذة الإهداء الموحدة السريعة والخفيفة */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0f19;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .intro-card {
+            background: #151c2c;
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #2e7d32;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.2);
+        }
+
+        .intro-card h1 {
+            color: #81c784;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .intro-card p {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .intro-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* نافذة الاستبيان المتكامل */
+        .survey-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0f19;
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .survey-card {
+            background: #151c2c;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #233049;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .survey-card h2 {
+            color: #38bdf8;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .survey-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .option-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-btn.selected {
+            background: #38bdf8;
+            border-color: #38bdf8;
+            color: #0b0f19;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* الواجهة الرئيسية */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #151c2c;
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .tab-link {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .tab-link.active {
+            background: #38bdf8;
+            color: #0b0f19;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* الشات */
+        .chat-wrapper {
+            background: #151c2c;
+            border-radius: 16px;
+            border: 1px solid #233049;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        .message.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; }
+        .message.user { background: #38bdf8; color: #0b0f19; align-self: flex-end; }
+
+        .chat-input-area {
+            padding: 12px;
+            background: #121824;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            outline: none;
+        }
+
+        .send-btn {
+            background: #38bdf8;
+            border: none;
+            padding: 0 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* صديقة المواساة */
+        .friend-card {
+            background: #151c2c;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #233049;
+        }
+
+        .support-btn {
+            background: #f43f5e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        /* الاستوديو */
+        .studio-panel {
+            background: #151c2c;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #233049;
+            text-align: center;
+        }
+
+        .theme-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .theme-btn {
+            padding: 12px;
+            border-radius: 10px;
+            background: #1e293b;
+            color: white;
+            border: 1px solid #334155;
+            cursor: pointer;
+        }
+
+        .theme-btn.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
     </style>
 </head>
 <body>
-    <div class="welcome">
-        <h1>مرحباً بكِ في معرضكِ الفني الفخم 🎨</h1>
-        <p>جاري تحميل لوحاتكِ وأفكاركِ الإبداعية...</p>
+
+    <!-- المرحلة 1: إهداء أمي وأبي الموحد الخفيف -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-card" id="introCard">
+            <h1>أمي العزيزة وأبي الغالي 🤍🌿</h1>
+            <p id="introText">إلى أمي الرائعة.. كلما كبرتُ أدركتُ كم أن كلماتكِ الطيبة وتشجيعكِ لي هو سر قوتي وإبداعي الفني. هذا التطبيق أهديه لكِ كدليل على فخري واعتزازي بكِ وبكل ما تقدمينه لي دائماً.</p>
+            <button class="intro-btn" onclick="nextIntro()">التالي ✨</button>
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- المرحلة 2: الاستبيان المتكامل المعدل حسب ذوقكِ -->
+    <div class="survey-overlay" id="surveyOverlay">
+        <div class="survey-card">
+            <h2>لوحة اختياراتكِ الإبداعية 📋🎨</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem;">حددي الأجواء الفنية، القرائية والتعليمية المفضلة لديكِ:</p>
+            <div class="survey-options">
+                <button class="option-btn" onclick="toggleOption(this)">📚 تنسيق ومناقشة الروايات والكتب المفضلة</button>
+                <button class="option-btn" onclick="toggleOption(this)">🎨 دمج وخلط ألوان الأكريليك وتزيين الرفوف</button>
+                <button class="option-btn" onclick="toggleOption(this)">🖍️ أفكار لرسم لوحات فخمة بألوان الماركرز</button>
+                <button class="option-btn" onclick="toggleOption(this)">🌈 استكشاف درجات وتناسق الألوان المائية والزيتية</button>
+                <button class="option-btn" onclick="toggleOption(this)">🧪 مراجعة وحفظ الأعداد الذرية للجدول الدوري</button>
+                <button class="option-btn" onclick="toggleOption(this)">🇬🇧 التدرب على قواعد الإنجليزية (Since)</button>
+            </div>
+            <button class="submit-btn" onclick="closeSurvey()">تأكيد الاختيارات وفتح عالمكِ الفخم ✨</button>
+        </div>
+    </div>
+
+    <!-- المرحلة 3: الواجهة الرئيسية -->
+    <div class="app-container" id="appMain">
+        <div class="app-header">
+            <h2>مـعـرض لـوحـتـي الـفـنـي الـمـتـكـامـل</h2>
+            <p style="color: #64748b; font-size: 0.9rem;">مساحتك الفنية الفاخرة للرسم، القراءة، والمذاكرة</p>
+        </div>
+
+        <div class="tabs-nav">
+            <button class="tab-link active" onclick="switchTab(event, 'chatTab')">💬 الدردشة الفنية</button>
+            <button class="tab-link" onclick="switchTab(event, 'friendTab')">🌸 صديقة المواساة</button>
+            <button class="tab-link" onclick="switchTab(event, 'studioTab')">🎨 مظهر التطبيق</button>
+        </div>
+
+        <!-- تبويب الدردشة -->
+        <div id="chatTab" class="tab-content active">
+            <div class="chat-wrapper">
+                <div class="chat-messages" id="chatBox">
+                    <div class="message bot">
+                        أهلاً بكِ يا فنانة وقارئة المستقبل! 🌟 أنا هنا اليوم لمساعدتكِ في كل ما تحبين: اقتراح ومناقشة الروايات والكتب، تقديم أفكار دمج مذهلة لألوان الأكريليك والماركرز، تزيين مرسمكِ الفخم بالزهور، أو مراجعة العلوم واللغات. ماذا نحضر اليوم؟
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="userInput" placeholder="اكتبي اسم رواية، نوع ألوان، أو سؤالكِ..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">إرسال</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تبويب صديقة المواساة -->
+        <div id="friendTab" class="tab-content">
+            <div class="friend-card">
+                <div style="font-size: 2.5rem; margin-bottom: 10px;">🌸</div>
+                <p id="quoteText" style="line-height: 1.7;">"بين صفحات الروايات وتدرجات ألوان الأكريليك، تصنعين عالماً فخماً يشبه تماماً نقاء روحكِ وعمق تفكيركِ الباهر ✨"</p>
+                <button class="support-btn" onclick="changeQuote()">أحتاج جرعة تشجيع أخرى ✨</button>
+            </div>
+        </div>
+
+        <!-- تبويب الاستوديو وتغيير الألوان -->
+        <div id="studioTab" class="tab-content">
+            <div class="studio-panel">
+                <h3>تخصيص ألوان وتصميم التطبيق</h3>
+                <div class="theme-selector">
+                    <button class="theme-btn active" onclick="changeTheme('dark', this)">الفهد الأسود الفخم 🖤</button>
+                    <button class="theme-btn" onclick="changeTheme('green', this)">الزمرد الأخضر 💚</button>
+                    <button class="theme-btn" onclick="changeTheme('purple', this)">النيلية الساحرة 💜</button>
+                    <button class="theme-btn" onclick="changeTheme('pink', this)">الوردي الناعم 🌸</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script strain="lightweight">
+        let introStep = 1;
+
+        function nextIntro() {
+            if (introStep === 1) {
+                document.getElementById('introCard').style.borderColor = '#444446';
+                document.querySelector('.intro-card h1').innerText = "أبي الغالي 🖤✨";
+                document.getElementById('introText').innerText = "إلى أبي وسندي.. ممتنة جداً لوجودك في حياتي، ولأنك دائماً تمنحني الأمان والتشجيع لأصل إلى أعلى مستويات النجاح والدراسة والفن. أهديكِ واجهة هذا التطبيق تعبيراً عن حبي وامتناني الصادق.";
+                introStep = 2;
+            } else {
+                document.getElementById('introOverlay').style.display = 'none';
+                document.getElementById('surveyOverlay').style.display = 'flex';
+            }
+        }
+
+        function toggleOption(btn) {
+            btn.classList.toggle('selected');
+        }
+
+        function closeSurvey() {
+            document.getElementById('surveyOverlay').style.display = 'none';
+            document.getElementById('appMain').style.display = 'block';
+        }
+
+        function switchTab(evt, tabName) {
+            let contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+            let links = document.getElementsByClassName("tab-linkNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+    
