@@ -22,7 +22,7 @@
             min-height: 100vh;
         }
 
-        /* نافذة الإهداء الموحدة السريعة والخفيفة */
+        /* نافذة الإهداء الفخمة والمباشرة */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -64,10 +64,12 @@
             background: #2e7d32;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
         }
 
         /* نافذة الاستبيان المتكامل */
@@ -266,7 +268,7 @@
             cursor: pointer;
         }
 
-        /* الاستوديو */
+        /* مظهر التطبيق */
         .studio-panel {
             background: #151c2c;
             border-radius: 16px;
@@ -296,12 +298,17 @@
 </head>
 <body>
 
-    <!-- المرحلة 1: إهداء أمي وأبي الموحد الخفيف -->
+    <!-- المرحلة 1: الإهداء الفخم المباشر (مدمج بدون تعليق) -->
     <div class="intro-overlay" id="introOverlay">
-        <div class="intro-card" id="introCard">
-            <h1>أمي العزيزة وأبي الغالي 🤍🌿</h1>
-            <p id="introText">إلى أمي الرائعة.. كلما كبرتُ أدركتُ كم أن كلماتكِ الطيبة وتشجيعكِ لي هو سر قوتي وإبداعي الفني. هذا التطبيق أهديه لكِ كدليل على فخري واعتزازي بكِ وبكل ما تقدمينه لي دائماً.</p>
-            <button class="intro-btn" onclick="nextIntro()">التالي ✨</button>
+        <div class="intro-card">
+            <h1>إلى أمي العزيزة وأبي الغالي ❤️🌿</h1>
+            <p style="margin-bottom: 12px; font-weight: 600; color: #81c784;">أمي العزيزة..</p>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;">كلما كبرتُ أدركتُ كم أن كلماتكِ الطيبة وتشجيعكِ لي هو سر قوتي وإبداعي الفني. هذا التطبيق أهديه لكِ كدليل على فخري واعتزازي بكِ وبكل ما تقدمينه لي دائماً.</p>
+            <hr style="border: 0; border-top: 1px solid #233049; margin: 15px 0;">
+            <p style="margin-bottom: 12px; font-weight: 600; color: #ffffff;">أبي الغالي..</p>
+            <p style="font-size: 0.95rem;">ممتنة جداً لوجودك في حياتي، ولأنك دائماً تمنحني الأمان والتشجيع لأصل إلى أعلى مستويات النجاح والدراسة والفن. أهديك واجهة هذا التطبيق تعبيراً عن حبي وامتناني الصادق.</p>
+            <br>
+            <button class="intro-btn" onclick="openSurvey()">الانتقال للاختيارات الفنية ✨</button>
         </div>
     </div>
 
@@ -373,19 +380,10 @@
         </div>
     </div>
 
-    <script strain="lightweight">
-        let introStep = 1;
-
-        function nextIntro() {
-            if (introStep === 1) {
-                document.getElementById('introCard').style.borderColor = '#444446';
-                document.querySelector('.intro-card h1').innerText = "أبي الغالي 🖤✨";
-                document.getElementById('introText').innerText = "إلى أبي وسندي.. ممتنة جداً لوجودك في حياتي، ولأنك دائماً تمنحني الأمان والتشجيع لأصل إلى أعلى مستويات النجاح والدراسة والفن. أهديكِ واجهة هذا التطبيق تعبيراً عن حبي وامتناني الصادق.";
-                introStep = 2;
-            } else {
-                document.getElementById('introOverlay').style.display = 'none';
-                document.getElementById('surveyOverlay').style.display = 'flex';
-            }
+    <script>
+        function openSurvey() {
+            document.getElementById('introOverlay').style.display = 'none';
+            document.getElementById('surveyOverlay').style.display = 'flex';
         }
 
         function toggleOption(btn) {
@@ -400,5 +398,6 @@
         function switchTab(evt, tabName) {
             let contents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
-            let links = document.getElementsByClassName("tab-linkNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+            let links = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < links.length; i++) linksNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
     
